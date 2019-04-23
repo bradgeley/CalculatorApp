@@ -8,22 +8,54 @@
 
 import UIKit
 
-
 class ViewController: UIViewController {
     
-    var defaultNumLabel = "0"
-
-    @IBOutlet weak var numLabel: UILabel!
+    let defaultNumLabel = "0"
     
+    @IBOutlet weak var numLabel: UILabel!
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        //Do any additional setup after loading the view.
         numLabel.text = defaultNumLabel
+        
     }
+    
+/* IBAction Functions  */
+    
+    /* AllClear
+     * --------
+     * "AC" button. Resets the current text view to the default: "0"
+     */
 
     @IBAction func AllClear(_ sender: Any) {
+        
         numLabel.text = defaultNumLabel
+        
     }
+    
+    /* ChangeSign
+     * ----------
+     * "+/-" button. Changes the sign of the current number.
+     */
+    
+    
+    @IBAction func ChangeSign(_ sender: Any) {
+        
+        if (numLabel.text! != "0") {
+            if ((numLabel.text!.contains("-"))) {
+                numLabel.text = String(numLabel.text!.dropFirst())
+            } else {
+                numLabel.text = "-" + numLabel.text!
+            }
+        }
+    }
+    
+    /* Decimal
+     * -------
+     * "." button. Adds a maximum of one decimal to the displayed number.
+     */
     
     @IBAction func Decimal(_ sender: Any) {
         
@@ -35,10 +67,24 @@ class ViewController: UIViewController {
         
     }
     
+    /* Percent
+     * --------
+     * "%" button. Divides the current number by 100.
+     */
+    
     @IBAction func Percent(_ sender: Any) {
         
+        let numAsDouble:Double = toDouble(num: numLabel.text!)
+        numLabel.text = addCommas(num: String(numAsDouble/100))
+        
     }
-    
+
+    /* numberPressed
+     * -------------
+     * Buttons "0" through "9"
+     * Removes all commas from the current number, adds the
+     * input, then adds new commas to the number before displaying.
+     */
     
     @IBAction func numberPressed(_ sender: Any) {
         
@@ -52,11 +98,14 @@ class ViewController: UIViewController {
             number += String(input)
             numLabel.text = addCommas(num: number)
         } else {
-            /* Special case: if user has not yet entered any number,
-             it is 0, therefore it is replaced by the input */
+            /* Special case: if user has not yet entered any number, it is "0",
+               therefore it is replaced by the input to avoid a leading "0"     */
             numLabel.text! = String(input)
         }
     }
+    
+    
+/* String Manipulation Functions */
     
     func toDouble(num:String) -> Double {
         
@@ -84,8 +133,18 @@ class ViewController: UIViewController {
     
     func addCommas(num:String) -> String {
         
+        //Take off and save the sign, if its negative
+        var sign:String = ""
+        var numWithNoSign = num
+        if (numLabel.text!.contains("-")) {
+            //Save the sign
+            sign = "-"
+            //Drop the sign
+            numWithNoSign = String(numWithNoSign.dropFirst())
+        }
+        
         //Split the number string by the decimal, if one exists
-        let numSplitByDecimal:Array<Substring> = num.split(separator: Character("."), maxSplits: 1, omittingEmptySubsequences: true)
+        let numSplitByDecimal:Array<Substring> = numWithNoSign.split(separator: Character("."), maxSplits: 1, omittingEmptySubsequences: true)
         
         //Initializers to save each side of the split (if a split occured)
         let numWithNoDecimal:String = String(numSplitByDecimal[0])
@@ -124,8 +183,8 @@ class ViewController: UIViewController {
             
         }
         
-        //Reverse the String back to normal, and add back the decimal
-        return String(numWithCommas.reversed() + decimal)
+        //Reverse the String back to normal, and add back the decimal/sign
+        return String(sign + String((numWithCommas.reversed() + decimal)))
         
     }
     
