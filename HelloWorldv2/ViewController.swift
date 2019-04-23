@@ -12,6 +12,13 @@ class ViewController: UIViewController {
     
     let defaultNumLabel = "0"
     
+    //Globabl variable to keep track of the last tag that was pressed
+    var lastTagPressed:Int = 0
+    var lastArithmeticTagPressed:Int = 0
+    
+    //Saves first number in an arithmetic operation
+    var firstNumber:Double = 0
+    
     @IBOutlet weak var numLabel: UILabel!
     override func viewDidLoad() {
         
@@ -78,6 +85,59 @@ class ViewController: UIViewController {
         numLabel.text = addCommas(num: String(numAsDouble/100))
         
     }
+    
+    
+    @IBAction func Arithmetic(_ sender: Any) {
+        
+        let addTag = 11, subTag = 12, mulTag = 13, divTag = 14, equalsTag = 15
+        let tagPressed = (sender as! UIButton).tag
+        
+        //Save original number with no commas, save as a double
+        let currNum:Double = toDouble(num: numLabel.text!)
+        
+        //If they want to change the arithmetic operator because they misclicked/changed mind
+        if (lastArithmeticTagPressed != 0 && tagPressed != equalsTag) {
+            
+            //Rewrite the operator only, they want to change it
+            lastArithmeticTagPressed = tagPressed
+            lastTagPressed = tagPressed
+            
+        } else {
+            
+            //No previous operator was pressed, and it isnt equals
+            if (tagPressed != equalsTag) {
+                
+                //save the first number, so it can be rewritten, save the operator
+                firstNumber = currNum
+                lastArithmeticTagPressed = tagPressed
+                lastTagPressed = tagPressed
+                
+            } else {
+                
+                //User pressed the equals button, and they have an operator, so do the math
+                
+                //If the arithmetic operator was addition...
+                if (lastArithmeticTagPressed == addTag) {
+                    
+                    //Add the current number to the firstNumber
+                    let result = currNum + firstNumber
+                    
+                    //Set the label to display the new number
+                    numLabel.text = addCommas(num: String(result))
+                    
+                    //reset everything
+                    firstNumber = 0
+                    lastTagPressed = 0
+                    lastArithmeticTagPressed = 0
+                    
+                }
+                
+            }
+            
+        }
+        
+    }
+    
 
     /* numberPressed
      * -------------
@@ -90,6 +150,16 @@ class ViewController: UIViewController {
         
         let tag = (sender as! UIButton).tag
         let input = (tag - 1)
+        
+        if (lastTagPressed == 11) {
+            
+            //Number was saved, so overwrite number
+            numLabel.text = defaultNumLabel
+            
+            //Reset lastTagPressed to not interfere with number typing
+            lastTagPressed = 0
+            
+        }
         
         //First remove commas from the current display string
         var number = removeCommas(num: numLabel.text!)
