@@ -119,6 +119,8 @@ class ViewController: UIViewController {
                 }
                 
                 //If the arithmetic operator was addition...
+                
+                //BUG: Does NOT work for negative numbers
                 if (lastArithmeticTagPressed == addTag) {
                     
                     //Add the current number to the firstNumber
@@ -223,7 +225,7 @@ class ViewController: UIViewController {
         //Take off and save the sign, if its negative
         var sign:String = ""
         var numWithNoSign = num
-        if (numLabel.text!.contains("-")) {
+        if (num.contains("-")) {
             //Save the sign
             sign = "-"
             //Drop the sign
