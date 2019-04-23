@@ -18,6 +18,7 @@ class ViewController: UIViewController {
     
     //Saves first number in an arithmetic operation
     var firstNumber:Double = 0
+    var secondNumber:Double = 0
     
     @IBOutlet weak var numLabel: UILabel!
     override func viewDidLoad() {
@@ -100,7 +101,6 @@ class ViewController: UIViewController {
             
             //Rewrite the operator only, they want to change it
             lastArithmeticTagPressed = tagPressed
-            lastTagPressed = tagPressed
             
         } else {
             
@@ -110,31 +110,41 @@ class ViewController: UIViewController {
                 //save the first number, so it can be rewritten, save the operator
                 firstNumber = currNum
                 lastArithmeticTagPressed = tagPressed
-                lastTagPressed = tagPressed
                 
             } else {
                 
                 //User pressed the equals button, and they have an operator, so do the math
+                if (lastTagPressed != equalsTag) {
+                    secondNumber = currNum
+                }
                 
                 //If the arithmetic operator was addition...
                 if (lastArithmeticTagPressed == addTag) {
                     
                     //Add the current number to the firstNumber
-                    let result = currNum + firstNumber
+                    let result = firstNumber + secondNumber //or currNum
+                    firstNumber = result
                     
                     //Set the label to display the new number
                     numLabel.text = addCommas(num: String(result))
                     
                     //reset everything
-                    firstNumber = 0
-                    lastTagPressed = 0
-                    lastArithmeticTagPressed = 0
+                    //firstNumber = currNum
+                    //lastArithmeticTagPressed = 0
+                    
+                }
+                
+                //Case where they want to do multiple equals in a row, so repeat arithmetic
+                if (lastTagPressed == equalsTag) {
+                    
+                    
                     
                 }
                 
             }
             
         }
+        lastTagPressed = tagPressed
         
     }
     
@@ -151,7 +161,14 @@ class ViewController: UIViewController {
         let tag = (sender as! UIButton).tag
         let input = (tag - 1)
         
-        if (lastTagPressed == 11) {
+        if (lastTagPressed == 15) {
+            
+            lastArithmeticTagPressed = 0
+            firstNumber = 0
+            
+        }
+        
+        if (lastTagPressed == 11 || lastTagPressed == 15) {
             
             //Number was saved, so overwrite number
             numLabel.text = defaultNumLabel
