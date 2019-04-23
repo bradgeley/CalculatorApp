@@ -58,6 +58,9 @@ class ViewController: UIViewController {
                 numLabel.text = "-" + numLabel.text!
             }
         }
+        if (lastTagPressed == 15) {
+            firstNumber = toDouble(num: numLabel.text!)
+        }
     }
     
     /* Decimal
@@ -170,6 +173,7 @@ class ViewController: UIViewController {
             
         }
         
+        //Only works for addition currently
         if (lastTagPressed == 11 || lastTagPressed == 15) {
             
             //Number was saved, so overwrite number
