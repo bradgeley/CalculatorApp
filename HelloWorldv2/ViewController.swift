@@ -21,6 +21,25 @@ class ViewController: UIViewController {
         numLabel.text = defaultNumLabel
     }
 
+    @IBAction func AllClear(_ sender: Any) {
+        numLabel.text = defaultNumLabel
+    }
+    
+    @IBAction func Decimal(_ sender: Any) {
+        
+        if !((numLabel.text!.contains(Character(".")))) {
+            
+            numLabel.text! += "."
+            
+        }
+        
+    }
+    
+    @IBAction func Percent(_ sender: Any) {
+        
+    }
+    
+    
     @IBAction func numberPressed(_ sender: Any) {
         
         let tag = (sender as! UIButton).tag
@@ -37,6 +56,14 @@ class ViewController: UIViewController {
              it is 0, therefore it is replaced by the input */
             numLabel.text! = String(input)
         }
+    }
+    
+    func toDouble(num:String) -> Double {
+        
+        let noCommas = removeCommas(num: num)
+        
+        return Double(noCommas)!
+        
     }
     
     func removeCommas(num:String) -> String {
@@ -57,11 +84,29 @@ class ViewController: UIViewController {
     
     func addCommas(num:String) -> String {
         
-        let numBackwards:String = String(num.reversed())
+        //Split the number string by the decimal, if one exists
+        let numSplitByDecimal:Array<Substring> = num.split(separator: Character("."), maxSplits: 1, omittingEmptySubsequences: true)
+        
+        //Initializers to save each side of the split (if a split occured)
+        let numWithNoDecimal:String = String(numSplitByDecimal[0])
+        var decimal:String = ""
+        
+        //If a split did occur, save the decimal and add back the delimeter
+        if (numSplitByDecimal.count > 1) {
+            decimal = "." + String(numSplitByDecimal[1])
+        }
+        
+        //Initializers to add commas to everything on the left of decimal
+        let numBackwards:String = String(numWithNoDecimal.reversed())
         var numWithCommas:String = ""
+        
+        //as we iterate through numBackwards, numRemaining will show only the numbers we have not yet counted
         var numRemaining = numBackwards
+        
+        //Count is used to iterate to 3, place a comma, then reset back to 0
         var count = 0
         
+        //Iterate through numBackwards, adding each character and comma to the blank String numWithCommas
         for char in numBackwards {
             
             numWithCommas += String(char)
@@ -79,7 +124,8 @@ class ViewController: UIViewController {
             
         }
         
-        return String(numWithCommas.reversed())
+        //Reverse the String back to normal, and add back the decimal
+        return String(numWithCommas.reversed() + decimal)
         
     }
     
