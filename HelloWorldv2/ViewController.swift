@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Foundation
+
 
 class ViewController: UIViewController {
     
@@ -16,6 +18,9 @@ class ViewController: UIViewController {
     //Set up global variable to be able to update numLabel from other functions
     @IBOutlet weak var numLabel: UILabel!
     
+    //Global variable to initialize our Math Frame instance
+    //var mfInstance:MathFrame!
+
     //Global boolean to handle AC vs C button
     let allClear:Bool = true
     
@@ -24,7 +29,13 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         //Do any additional setup after loading the view.
-        numLabel.text = "0"
+        
+        //test 1
+        let testNumber1:Number = Number(positive: true, prefix: 1, decimal: true, suffix: "005")
+        var testNumber2:Number = Number(positive: true, prefix: 1, decimal: true, suffix: "006")
+        testNumber2 += testNumber1
+        numLabel.text = testNumber2.toString()
+
         
     }
     

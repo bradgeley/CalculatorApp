@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HelloWorldv2/ViewController.swift"
-            timestampString = "577808081.5694309"
+            timestampString = "577834573.143748"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
             landmarkName = "Arithmetic(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HelloWorldv2/ViewController.swift"
-            timestampString = "577808081.570116"
+            timestampString = "577834573.14385"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
             landmarkName = "addCommas(num:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HelloWorldv2/ViewController.swift"
-            timestampString = "577808081.570595"
+            timestampString = "577834573.143932"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
             landmarkName = "addCommas(num:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HelloWorldv2/ViewController.swift"
-            timestampString = "577808081.57105"
+            timestampString = "577834573.144009"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
             landmarkName = "Decimal(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -74,12 +74,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HelloWorldv2/ViewController.swift"
-            timestampString = "577808081.571473"
+            timestampString = "577834573.14408"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
             landmarkName = "ChangeSign(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HelloWorldv2/Number.swift"
+            timestampString = "577834573.144154"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
+            landmarkName = "+=(_:_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

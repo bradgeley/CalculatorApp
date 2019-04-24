@@ -12,6 +12,9 @@
 		1C7C5286226E2FB3004AB243 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C7C5284226E2FB3004AB243 /* Main.storyboard */; };
 		1C7C5288226E2FB4004AB243 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C7C5287226E2FB4004AB243 /* Assets.xcassets */; };
 		1C7C528B226E2FB4004AB243 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C7C5289226E2FB4004AB243 /* LaunchScreen.storyboard */; };
+		1C7C52B12270ABC5004AB243 /* MathFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7C52B02270ABC5004AB243 /* MathFrame.swift */; };
+		1C7C52B32270AD1F004AB243 /* Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7C52B22270AD1F004AB243 /* Number.swift */; };
+		1C7C52B52270E866004AB243 /* Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7C52B42270E866004AB243 /* Operator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +25,9 @@
 		1C7C5287226E2FB4004AB243 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1C7C528A226E2FB4004AB243 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1C7C528C226E2FB4004AB243 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1C7C52B02270ABC5004AB243 /* MathFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathFrame.swift; sourceTree = "<group>"; };
+		1C7C52B22270AD1F004AB243 /* Number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Number.swift; sourceTree = "<group>"; };
+		1C7C52B42270E866004AB243 /* Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +62,9 @@
 			children = (
 				1C7C5280226E2FB3004AB243 /* AppDelegate.swift */,
 				1C7C5282226E2FB3004AB243 /* ViewController.swift */,
+				1C7C52B02270ABC5004AB243 /* MathFrame.swift */,
+				1C7C52B22270AD1F004AB243 /* Number.swift */,
+				1C7C52B42270E866004AB243 /* Operator.swift */,
 				1C7C5284226E2FB3004AB243 /* Main.storyboard */,
 				1C7C5287226E2FB4004AB243 /* Assets.xcassets */,
 				1C7C5289226E2FB4004AB243 /* LaunchScreen.storyboard */,
@@ -135,6 +144,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C7C52B12270ABC5004AB243 /* MathFrame.swift in Sources */,
+				1C7C52B32270AD1F004AB243 /* Number.swift in Sources */,
+				1C7C52B52270E866004AB243 /* Operator.swift in Sources */,
 				1C7C5283226E2FB3004AB243 /* ViewController.swift in Sources */,
 				1C7C5281226E2FB3004AB243 /* AppDelegate.swift in Sources */,
 			);
