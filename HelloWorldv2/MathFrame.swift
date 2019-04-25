@@ -217,8 +217,88 @@ import Foundation
 
 class MathFrame {
     var numQueue:Array<Number> = Array()
-    var opQueue:Array<Operator> = Array()
+    var operatorQueue:Array<Operator> = Array()
+
+    var currentNumberIndex:Int
+    var currentOperatorIndex:Int
     
-    init() {}
+    //True means the "AC" button is showing, false means the "C" button is showing
+    var clearButton:Bool = true
+    
+    init() {
+        currentNumberIndex = 0
+        currentOperatorIndex = 0
+    }
+    
+    //Number to add to current Number, sent by View Controller
+    func digitPressed(num:Int) {
+        
+    }
+    
+    //Clear both Arrays and start from scratch
+    func allClear() {
+        
+    }
+    
+    //Clear current number only and allow for new number input
+    func clear() {
+        
+    }
+    
+    //Change sign of current Number
+    func changeSign() {
+        
+    }
+    
+    //Adds decimal (if possible) to current Number
+    func addDecimal() {
+        
+    }
+    
+    //Divides current Number by 100
+    func percent() {
+        
+    }
+    
+    func setCurrentNumber(index:Int) {
+        
+    }
+    
+    
+/* Arithmetic Functions */
+    
+    
+    //Solves an operation with 2 Numbers and an Operator
+    func resolve(lhs:Number, Op:Operator, rhs:Number) -> Number {
+        
+        //Convert Numbers to Doubles for arithmetic
+        let lhsDouble:Double = lhs.toDouble()
+        let rhsDouble:Double = rhs.toDouble()
+        var resultDouble:Double = 0
+        
+        //Addition
+        if (Op.opID == 11) {
+            resultDouble = lhsDouble + rhsDouble
+        }
+        
+        //Subtraction
+        if (Op.opID == 12) {
+            resultDouble = lhsDouble - rhsDouble
+        }
+        
+        //Multiplication
+        if (Op.opID == 13) {
+            resultDouble = lhsDouble * rhsDouble
+        }
+        
+        //Division
+        if (Op.opID == 14 && rhsDouble != 0) {
+            resultDouble = lhsDouble / rhsDouble
+        }
+        
+        //Convert answer back to a Number
+        let resultString:String = String(resultDouble)
+        return Number(num:resultString)
+    }
     
 }

@@ -9,9 +9,16 @@
 import Foundation
 
 
+/* Number Class
+ * ------------
+ * The main function of the Number class is to be able to easily
+ * build a Number digit by digit in the same way that users will be
+ * clicking buttons in the calculator.
+ */
 
 
 class Number {
+    
     var positive:Bool = true
     var prefix:Int = 0
     var decimal:Bool = false
@@ -20,7 +27,7 @@ class Number {
     
     init() {}
     
-    //suffix given as a raw decimal value with no leading 1
+    //initializer if you want to specify the Number's structure
     init(positive:Bool, prefix:Int, decimal:Bool, suffix:String) {
         self.positive = positive
         self.prefix = prefix
@@ -29,6 +36,33 @@ class Number {
         self.suffix = Int("1" + suffix)!
     }
     
+    //initializer from a string literal of the number. Must be proper format.
+    init(num:String) {
+        var numCopy = num
+        if (numCopy.first == "-") {
+            self.positive = false
+            numCopy.removeFirst()
+        }
+        if (num.contains(".")) {
+            self.decimal = true
+            let numSplit = numCopy.split(separator: ".")
+            self.prefix = Int(numSplit[0])!
+            self.suffixDigits = numSplit[1].count
+            let leadingOne = Int(pow(Double(10),Double(numSplit[1].count)))
+            self.suffix = leadingOne + Int(numSplit[1])!
+        } else {
+            self.decimal = false
+            self.prefix = Int(num)!
+            self.suffix = 1
+            self.suffixDigits = 0
+        }
+    }
+    
+    func toDouble() -> Double {
+        return Double(self.toString())!
+    }
+    
+    //Converts the Number to a String
     func toString() -> String {
         var result = ""
         if (!self.positive) { result = result + "-"}
@@ -49,7 +83,7 @@ class Number {
         }
         return result
     }
-    
+
     /*Number class handles all digit adding internally*/
     func addDigit(digit:Int) {
         if (!decimal) {
@@ -68,6 +102,10 @@ class Number {
     
     func changeSign() {
         self.positive = !self.positive
+    }
+    
+    func getSigFigs() -> Int {
+        return 100
     }
 
     //Addition Function for Number Class
@@ -91,11 +129,12 @@ class Number {
         if (suffixSum - leadingOnes < 0) {
             lhs.suffix = suffixSum + leadingOnes
         } else {
+            //Decimal addition did overload
             lhs.suffix = suffixSum
             lhs.prefix += 1
         }
         
-        //Lop off trailing 0's
+        //Lop off any unnecessary trailing 0's
         while (lhs.suffix % 10 == 0) {
             lhs.suffix /= 10
             lhs.suffixDigits -= 1

@@ -15,27 +15,17 @@ class ViewController: UIViewController {
     //global constants
     let ADD_TAG = 11, SUB_TAG = 12, MUL_TAG = 13, DIV_TAG = 14, EQUALS_TAG = 15
     
-    //Set up global variable to be able to update numLabel from other functions
+    @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var numLabel: UILabel!
     
     //Global variable to initialize our Math Frame instance
     //var mfInstance:MathFrame!
-
-    //Global boolean to handle AC vs C button
-    let allClear:Bool = true
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
         //Do any additional setup after loading the view.
-        
-        //test 1
-        let testNumber1:Number = Number(positive: true, prefix: 1, decimal: true, suffix: "005")
-        var testNumber2:Number = Number(positive: true, prefix: 1, decimal: true, suffix: "006")
-        testNumber2 += testNumber1
-        numLabel.text = testNumber2.toString()
-
         
     }
     
@@ -51,7 +41,15 @@ class ViewController: UIViewController {
      */
 
     @IBAction func AllClear(_ sender: Any) {
-
+        
+    }
+    
+    func swapClearButton() {
+        if (clearButton.title(for: .normal) == "AC") {
+            clearButton.setTitle("C", for: .normal)
+        } else {
+            clearButton.setTitle("AC", for: .normal)
+        }
     }
     
     /* ChangeSign
@@ -81,18 +79,6 @@ class ViewController: UIViewController {
         
     }
     
-    /* Arithmetic
-     * ----------
-     * Handles all Arithmetic buttons: "+" "-" "X" "/" "="
-     */
-    
-    
-    @IBAction func Arithmetic(_ sender: Any) {
-        
-       
-        
-    }
-    
 
     /* numberPressed
      * -------------
@@ -105,19 +91,12 @@ class ViewController: UIViewController {
     @IBAction func numberPressed(_ sender: Any) {
         
         let tag = (sender as! UIButton).tag
-        
-        // Tags are integers ranging from 1-10, 1 for 0 and 10 for 9.
-        // Therefore the value of the number pressed is tag - 1
         let input = (tag - 1)
 
     }
     
     
 /* String Manipulation Functions */
-    
-    func toDouble(num:String) -> Double {
-        return 0
-    }
     
     func removeCommas(num:String) -> String {
         return ""
@@ -126,7 +105,6 @@ class ViewController: UIViewController {
     func addCommas(num:String) -> String {
         return ""
     }
-    
 
 }
 
