@@ -19,7 +19,8 @@ class Operator {
     var active:Bool
     
     
-    /* Initializers */
+/* Initializers */
+    
     init() {
         self.opID = 0
         self.active = false
@@ -31,7 +32,8 @@ class Operator {
     }
     
     
-    /* Getters and Setters */
+/* Getters and Setters */
+    
     func activate() {
         self.active = true
     }

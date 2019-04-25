@@ -57,7 +57,16 @@ class ViewController: UIViewController {
      */
 
     @IBAction func AllClear(_ sender: Any) {
-        mfInstance.clear()
+        
+        //Send command to Math Frame for processing
+        if (mfInstance.clearButtonShowsAC) {
+            mfInstance.allClear()
+        }
+        
+        if (!mfInstance.clearButtonShowsAC) {
+            mfInstance.clear()
+        }
+        
         updateDisplay()
     }
     
@@ -67,7 +76,10 @@ class ViewController: UIViewController {
      */
     
     @IBAction func ChangeSign(_ sender: Any) {
+        
+        //Send command to Math Frame for processing
         mfInstance.changeSign()
+        
         updateDisplay()
     }
     
@@ -77,7 +89,10 @@ class ViewController: UIViewController {
      */
     
     @IBAction func Decimal(_ sender: Any) {
+        
+        //Send command to Math Frame for processing
         mfInstance.addDecimal()
+        
         updateDisplay()
     }
     
@@ -87,7 +102,10 @@ class ViewController: UIViewController {
      */
     
     @IBAction func Percent(_ sender: Any) {
+        
+        //Send command to Math Frame for processing
         mfInstance.percent()
+        
         updateDisplay()
     }
     
@@ -101,8 +119,12 @@ class ViewController: UIViewController {
      */
     
     @IBAction func numberPressed(_ sender: Any) {
+        
+        //Find out which number was pressed
         let tag = (sender as! UIButton).tag
         let num = (tag - 1)
+        
+        //Send digit to Math Frame for processing
         mfInstance.sendDigit(digit: num)
         
         updateDisplay()
@@ -110,9 +132,16 @@ class ViewController: UIViewController {
 
     //Addition, Subtraction, Division, Multiplication, and Equals buttons
     @IBAction func operatorPressed(_ sender: Any) {
+        
+        //Save the tag of the operator pressed
         let tag:Int = (sender as! UIButton).tag
+        
+        //Create new operator instance with that tag
         let newOperator = Operator(opID: tag)
+        
+        //Push the operator into the Math Frame for processing
         mfInstance.sendOperator(op: newOperator)
+        
         updateDisplay()
     }
     
@@ -120,10 +149,12 @@ class ViewController: UIViewController {
     
     //Asks the Math Frame for displayable data, then displays the data.
     func updateDisplay() {
-        displayNumber()
-        let currentOperator:Operator = mfInstance.getCurrentOperator()
         
-        //Highlight current operator
+        //Update display for number first
+        displayNumber()
+        
+        //Find and highlight operator, if any
+        let currentOperator:Operator = mfInstance.getCurrentOperator()
         highlightOperator(op: currentOperator)
         
         //Set clear button to show correct text, according to Math Frame
@@ -133,15 +164,9 @@ class ViewController: UIViewController {
     
     func displayNumber() {
         let currentNumber:Number = mfInstance.getCurrentNumber()
-        var currentNumberString:String = currentNumber.toString()
-        
-        //Add trailing zeros
-        while (currentNumber.getNumActiveDigits() != currentNumberString.count) {
-            currentNumberString += "0"
-        }
         
         //Set label text to current Number, according to Math Frame
-        numLabel.text = currentNumberString
+        numLabel.text = "0"
     }
     
     //First resets all highlights to default, then highlights correct operator

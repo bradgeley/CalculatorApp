@@ -15,8 +15,8 @@ import Foundation
 class MathFrame {
     
     //Arrays for keeping track of multiple Numbers and Operators at once
-    var numQueue:Array<Number> = Array()
-    var operatorQueue:Array<Operator> = Array()
+    var numQueue:Array<Number>
+    var operatorQueue:Array<Operator>
     
     //Index in the numQueue where the current displayed number is being stored
     var currentNumberIndex:Int
@@ -30,7 +30,13 @@ class MathFrame {
     //Bool to keep track of which version of clear button to show
     var clearButtonShowsAC:Bool = true
     
+    
+/* Initializer */
+    
     init() {
+        numQueue = Array()
+        operatorQueue = Array()
+        
         currentNumberIndex = 0
         currentOperatorIndex = 0
         
@@ -39,10 +45,14 @@ class MathFrame {
         currentOperator = Operator()
     }
     
-    //ViewController will send digits to the frame once they are complete
+    
+/* Calculator Button Command Processors */
+    
+    //Allows ViewController to send digits over so the Math Frame can process if
+    //The user is typing a new number or adding to an old number
     func sendDigit(digit:Int) {
-        //stub
-        self.currentNumber.addDigit(digit: digit)
+        //Stub, always just acts like user is adding to an existing number
+        self.currentNumber.addDigit(digit: String(digit))
     }
     
     //Allows ViewController to send an operator into the Math Frame instance
@@ -71,33 +81,29 @@ class MathFrame {
     
     //Adds decimal (if possible) to current Number
     func addDecimal() {
-        //stub
+        //Stub: User may be starting a new number by typing "."
         self.currentNumber.addDecimal()
     }
     
     //Divides current Number by 100
     func percent() {
-        //stub
         self.currentNumber = resolve(lhs: currentNumber, Op: Operator(opID: 14), rhs: Number(num: "100"))
     }
     
     //Changes which number is being displayed by the calculator
-    func setCurrentNumber(index:Int) {
-        //stub
+    func setCurrentNumber(num:Number) {
+        self.currentNumber = num
     }
     
     func getCurrentNumber() -> Number {
-        //stub
         return self.currentNumber
     }
     
     func setCurrentOperator(op: Operator) {
-        //stub
         self.currentOperator = op
     }
     
     func getCurrentOperator() -> Operator {
-        //stub
         return self.currentOperator
     }
     
@@ -109,8 +115,8 @@ class MathFrame {
     func resolve(lhs:Number, Op:Operator, rhs:Number) -> Number {
         
         //Convert Numbers to Doubles for arithmetic
-        let lhsDouble:Double = lhs.value
-        let rhsDouble:Double = rhs.value
+        let lhsDouble:Double = lhs.toDouble()
+        let rhsDouble:Double = rhs.toDouble()
         var resultDouble:Double = 0
         
         //Addition
