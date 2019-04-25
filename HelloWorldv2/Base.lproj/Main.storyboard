@@ -97,7 +97,7 @@
                                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="Arithmetic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nCv-j1-cgu"/>
+                                                    <action selector="operatorPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Zbn-Zc-sHg"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -150,7 +150,7 @@
                                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="Arithmetic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="riX-hv-djm"/>
+                                                    <action selector="operatorPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qcr-J3-sst"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -203,7 +203,7 @@
                                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="Arithmetic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qlz-FD-bTg"/>
+                                                    <action selector="operatorPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lVJ-mU-gw5"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -256,7 +256,7 @@
                                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="Arithmetic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7qc-YS-BXI"/>
+                                                    <action selector="operatorPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mTF-5c-bGT"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -300,7 +300,7 @@
                                                             <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="Arithmetic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3nw-LW-RYy"/>
+                                                            <action selector="operatorPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MWk-Qn-h9m"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -327,8 +327,12 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="addButton" destination="gIb-ET-ceq" id="Vze-rg-1xh"/>
                         <outlet property="clearButton" destination="Nyw-zh-FLB" id="4tG-Gs-NLC"/>
+                        <outlet property="divButton" destination="UyP-vP-NgG" id="FiG-mX-AGj"/>
+                        <outlet property="mulButton" destination="1Hc-Uw-LbS" id="Zs8-QB-zBG"/>
                         <outlet property="numLabel" destination="qBj-f7-688" id="4U9-26-anO"/>
+                        <outlet property="subButton" destination="hpO-26-ScD" id="TUc-2E-ZD5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

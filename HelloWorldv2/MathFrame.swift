@@ -218,9 +218,15 @@ import Foundation
 class MathFrame {
     var numQueue:Array<Number> = Array()
     var operatorQueue:Array<Operator> = Array()
-
+    
+    //Index in the numQueue where the current displayed number is being stored
     var currentNumberIndex:Int
+    //Index in the operatorQueue where the latest operator pressed is held
     var currentOperatorIndex:Int
+    
+    //stub
+    var currentNumber:Number
+    var currentOperator:Operator
     
     //True means the "AC" button is showing, false means the "C" button is showing
     var clearButton:Bool = true
@@ -228,11 +234,21 @@ class MathFrame {
     init() {
         currentNumberIndex = 0
         currentOperatorIndex = 0
+        
+        //stub
+        currentNumber = Number()
+        currentOperator = Operator()
     }
     
-    //Number to add to current Number, sent by View Controller
-    func digitPressed(num:Int) {
+    //ViewController will send digits to the frame once they are complete
+    func sendDigit(num:Int) {
         
+    }
+    
+    //Allows ViewController to send an operator into the Math Frame instance
+    func sendOperator(op:Operator) {
+        //stub
+        self.currentOperator = op
     }
     
     //Clear both Arrays and start from scratch
@@ -260,8 +276,24 @@ class MathFrame {
         
     }
     
+    //Changes which number is being displayed by the calculator
     func setCurrentNumber(index:Int) {
-        
+        //stub
+    }
+    
+    func getCurrentNumber() -> Number {
+        //stub
+        return Number()
+    }
+    
+    func setCurrentOperator(op: Operator) {
+        //stub
+        self.currentOperator = op
+    }
+    
+    func getCurrentOperator() -> Operator {
+        //stub
+        return self.currentOperator
     }
     
     
@@ -294,6 +326,8 @@ class MathFrame {
         //Division
         if (Op.opID == 14 && rhsDouble != 0) {
             resultDouble = lhsDouble / rhsDouble
+        } else if (rhsDouble == 0) {
+            //display error (DIV/0)
         }
         
         //Convert answer back to a Number

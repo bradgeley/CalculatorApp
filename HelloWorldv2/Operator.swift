@@ -42,11 +42,7 @@ class Operator {
     }
     
     func getPriority() -> Int {
-        if (self.opID == 13 || self.opID == 14) {
-            return 2
-        } else { //only remaining options are 11 and 12, which are addition and subtraction
-            return 1
-        }
+        return (self.opID == 13 || self.opID == 14 ? 2 : 1)
     }
     
 }
