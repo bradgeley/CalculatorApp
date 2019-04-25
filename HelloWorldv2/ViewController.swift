@@ -57,18 +57,7 @@ class ViewController: UIViewController {
      */
 
     @IBAction func AllClear(_ sender: Any) {
-        //Stub
         mfInstance.clear()
-        updateDisplay()
-    }
-    
-    func swapClearButton() {
-        if (clearButton.title(for: .normal) == "AC") {
-            clearButton.setTitle("C", for: .normal)
-        } else {
-            clearButton.setTitle("AC", for: .normal)
-        }
-        
         updateDisplay()
     }
     
@@ -112,12 +101,11 @@ class ViewController: UIViewController {
      */
     
     @IBAction func numberPressed(_ sender: Any) {
-        
         let tag = (sender as! UIButton).tag
         let num = (tag - 1)
         mfInstance.sendDigit(digit: num)
+        
         updateDisplay()
-
     }
 
     //Addition, Subtraction, Division, Multiplication, and Equals buttons
@@ -132,18 +120,32 @@ class ViewController: UIViewController {
     
     //Asks the Math Frame for displayable data, then displays the data.
     func updateDisplay() {
-    
-        let currentNumber:Number = mfInstance.getCurrentNumber()
+        displayNumber()
         let currentOperator:Operator = mfInstance.getCurrentOperator()
-        numLabel.text = currentNumber.toString()
         
-        //deal with highlighting the current operator being used
+        //Highlight current operator
         highlightOperator(op: currentOperator)
+        
+        //Set clear button to show correct text, according to Math Frame
+        let correctClearTitle:String = (mfInstance.clearButtonShowsAC ? "AC" : "C")
+        clearButton.setTitle(correctClearTitle, for: .normal)
     }
     
-    func highlightOperator(op:Operator) {
+    func displayNumber() {
+        let currentNumber:Number = mfInstance.getCurrentNumber()
+        var currentNumberString:String = currentNumber.toString()
         
-        //Reset highlights
+        //Add trailing zeros
+        while (currentNumber.getNumActiveDigits() != currentNumberString.count) {
+            currentNumberString += "0"
+        }
+        
+        //Set label text to current Number, according to Math Frame
+        numLabel.text = currentNumberString
+    }
+    
+    //First resets all highlights to default, then highlights correct operator
+    func highlightOperator(op:Operator) {
         addButton.backgroundColor = DEFAULT_ORANGE
         subButton.backgroundColor = DEFAULT_ORANGE
         mulButton.backgroundColor = DEFAULT_ORANGE
@@ -170,17 +172,6 @@ class ViewController: UIViewController {
             divButton.backgroundColor = HIGHLIGHTED_ORANGE
         }
         
-    }
-    
-    
-/* String Manipulation Functions */
-    
-    func removeCommas(num:String) -> String {
-        return ""
-    }
-    
-    func addCommas(num:String) -> String {
-        return ""
     }
 
 }

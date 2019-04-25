@@ -19,155 +19,114 @@ import Foundation
 
 class Number {
     
-    let MAX_DIGITS = 15
+    let MAX_DIGITS:Int = 12
+    var currentDigits:Int = 1
     
-    var positive:Bool = true
-    var prefix:Int = 0
+    var value:Double = 0
     var decimal:Bool = false
-    var suffix:Int = 1
-    var suffixDigits:Int = 0
+    var currentDecimalPlacePower:Double = 0
     
-    init() {}
+/* Initializers */
+    init () {}
     
-    //initializer if you want to specify the Number's structure
-    init(positive:Bool, prefix:Int, decimal:Bool, suffix:String) {
-        self.positive = positive
-        self.prefix = prefix
-        self.decimal = decimal
-        self.suffixDigits = suffix.count
-        self.suffix = Int("1" + suffix)!
-    }
-    
-    //initializer from a string literal of the number. Must be proper format.
-    init(num:String) {
-        var numCopy = num
-        if (numCopy.first == "-") {
-            self.positive = false
-            numCopy.removeFirst()
-        }
-        if (num.contains(".")) {
+    init(num:Double) {
+        self.value = num
+        if (Double(Int(num)) != num) {
             self.decimal = true
-            let numSplit = numCopy.split(separator: ".")
-            self.prefix = Int(numSplit[0])!
-            self.suffixDigits = numSplit[1].count
-            let leadingOne = Int(pow(Double(10),Double(numSplit[1].count)))
-            self.suffix = leadingOne + Int(numSplit[1])!
-        } else {
-            self.decimal = false
-            self.prefix = Int(num)!
-            self.suffix = 1
-            self.suffixDigits = 0
         }
     }
     
-    func toDouble() -> Double {
-        return Double(self.toString())!
+    init(num:Int) {
+        self.value = Double(num)
     }
     
-    //Converts the Number to a String
+    //Must be correct format, or error
+    init(num:String) {
+        if (Double(num) != nil) {
+            self.value = Double(num)!
+        }
+        //If optional check fails, the Number will and up as the default "0"
+    }
+    
+/* String Manipulation Functions */
+
     func toString() -> String {
-        var result = ""
-        if (!self.positive) { result = result + "-"}
-        result = result + String(prefix)
-        if (self.decimal) {
-            result = result + "."
-            if (suffixDigits != 0) {
-                let leadingOne:Int = Int(pow(Double(10),Double(self.suffixDigits)))
-                let noLeadingOne = self.suffix - leadingOne
-                var activeDigits = String(noLeadingOne)
-                var numActiveDigits = activeDigits.count
-            
-                //The only way these two values arent the same is if there were leading 0s
-                while (numActiveDigits != self.suffixDigits) {
-                    numActiveDigits += 1
-                    activeDigits = "0" + activeDigits
-                }
-            result = result + activeDigits
+        if (!self.decimal) {
+            return String(Int(self.value))
+        }
+        return String(self.value)
+    }
+    
+    func removeCommas(num:String) -> String {
+        return ""
+    }
+    
+    func addCommas(num:String) -> String {
+        return ""
+    }
+
+/* Calculator button functions */
+    func addDigit(digit:Int) {
+        if (self.currentDigits < MAX_DIGITS) {
+            if (!self.decimal) {
+                self.value *= 10
+                self.value += Double(digit)
+            } else {
+                let decimalPlaceMultiplier:Double = getDecimalPlaceMultiplier()
+                let placedDigit:Double = decimalPlaceMultiplier * Double(digit)
+                self.value += placedDigit
+                self.currentDecimalPlacePower -= 1
+                self.value = roundDoubleToPlace(num: self.value, place: -Int(currentDecimalPlacePower))
             }
+            self.currentDigits += 1
+        }
+    }
+    
+    func getNumActiveDigits() -> Int{
+        var activeDigits:String = String(abs(self.currentDigits))
+        var result = activeDigits.count
+        if (activeDigits.contains(".")) {
+            result -= 1
         }
         return result
     }
-
-    /*Number class handles all digit adding internally*/
-    func addDigit(digit:Int) {
-        /*if (self.toDouble() == 0) {
-            self.prefix = digit
-        } else {
-            if (!decimal) {
-                self.prefix *= 10
-                self.prefix += digit
-            } else {
-                self.suffix *= 10
-                self.suffix += digit
-                self.suffixDigits += 1
-            }*/
-        if (!decimal) {
-            if (self.toDouble() == 0) {
-                self.prefix = digit
-            } else {
-                self.prefix *= 10
-                self.prefix += digit
-            }
-        } else {
-            self.suffix *= 10
-            self.suffix += digit
-            self.suffixDigits += 1
-        }
-    }
-        
-        /*
-        if (!decimal) {
-            if (self.toDouble() == 0) {
-                self.prefix = digit
-            } else {
-                self.prefix *= 10
-                self.prefix += digit
-         } else {
-            self.suffix *= 10
-            self.suffix += digit
-            self.suffixDigits += 1
-         }
-         
-         */
     
+    func getDecimalPlaceMultiplier() -> Double {
+        var counter = self.currentDecimalPlacePower
+        var result:Double = 1.0
+        while (counter <= 0) {
+            result /= 10
+            counter += 1
+        }
+        return result
+    }
+    
+    func roundDoubleToPlace(num:Double, place:Int) -> Double {
+        var multiplier = 1.0
+        var counter = place
+        while (counter > 0) {
+            multiplier *= 10
+            counter -= 1
+        }
+        var digitsKept = num*multiplier
+        
+        //Rounding .5 up
+        if (Int(digitsKept + 0.5) != Int(digitsKept)) {
+            digitsKept += 1
+        }
+        
+        let finalDigits = Int(digitsKept)
+        
+        return Double(finalDigits)/multiplier
+    }
+    
+    //Adds decimal to Number
     func addDecimal() {
         self.decimal = true
     }
     
+    //Changes sign of Number
     func changeSign() {
-        self.positive = !self.positive
-    }
-
-    //Addition Function for Number Class
-    static func += (lhs: inout Number, rhs:Number) {
-        lhs.prefix += rhs.prefix
-        
-        //Equalize suffixes
-        while (lhs.suffixDigits != rhs.suffixDigits) {
-            if (lhs.suffixDigits < rhs.suffixDigits) {
-                lhs.addDigit(digit: 0)
-            } else {
-                rhs.addDigit(digit: 0)
-            }
-        }
-        
-        //subtract off leading 1's
-        let leadingOnes:Int = Int(pow(Double(10),Double(lhs.suffixDigits)))
-        let suffixSum = lhs.suffix + rhs.suffix - 2 * leadingOnes
-        
-        //Decimal addition did not overload
-        if (suffixSum - leadingOnes < 0) {
-            lhs.suffix = suffixSum + leadingOnes
-        } else {
-            //Decimal addition did overload
-            lhs.suffix = suffixSum
-            lhs.prefix += 1
-        }
-        
-        //Lop off any unnecessary trailing 0's
-        while (lhs.suffix % 10 == 0) {
-            lhs.suffix /= 10
-            lhs.suffixDigits -= 1
-        }
+        self.value *= -1
     }
 }

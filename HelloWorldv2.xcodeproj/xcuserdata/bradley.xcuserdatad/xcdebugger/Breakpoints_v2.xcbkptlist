@@ -10,43 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HelloWorldv2/ViewController.swift"
-            timestampString = "577917367.630409"
+            timestampString = "577923866.9813271"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "182"
-            endingLineNumber = "182"
-            landmarkName = "addCommas(num:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HelloWorldv2/ViewController.swift"
-            timestampString = "577917367.630839"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "183"
-            endingLineNumber = "183"
-            landmarkName = "addCommas(num:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HelloWorldv2/ViewController.swift"
-            timestampString = "577917367.630968"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
             landmarkName = "Decimal(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -58,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HelloWorldv2/ViewController.swift"
-            timestampString = "577917367.6310869"
+            timestampString = "577923866.982102"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
             landmarkName = "ChangeSign(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -73,60 +41,12 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HelloWorldv2/Number.swift"
-            timestampString = "577917367.631204"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
-            landmarkName = "init(num:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "HelloWorldv2.Number.__allocating_init(num: Swift.String) -&gt; HelloWorldv2.Number"
-                  moduleName = "HelloWorldv2"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/bradley/Documents/Projects/HelloWorldv2/HelloWorldv2/Number.swift"
-                  timestampString = "577840912.860435"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0"
-                  offsetFromSymbolStart = "14">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "HelloWorldv2.Number.init(num: Swift.String) -&gt; HelloWorldv2.Number"
-                  moduleName = "HelloWorldv2"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/bradley/Documents/Projects/HelloWorldv2/HelloWorldv2/Number.swift"
-                  timestampString = "577840912.862764"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "15"
-                  endingLineNumber = "15"
-                  offsetFromSymbolStart = "203">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "HelloWorldv2/ViewController.swift"
-            timestampString = "577917367.6319211"
+            timestampString = "577923866.983041"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
             landmarkName = "operatorPressed(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -138,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HelloWorldv2/ViewController.swift"
-            timestampString = "577917367.63201"
+            timestampString = "577923866.983413"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "144"
-            endingLineNumber = "144"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
             landmarkName = "highlightOperator(op:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -154,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HelloWorldv2/ViewController.swift"
-            timestampString = "577917367.632077"
+            timestampString = "577923866.9837641"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "134"
-            endingLineNumber = "134"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
             landmarkName = "updateDisplay()"
             landmarkType = "7">
          </BreakpointContent>
@@ -170,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HelloWorldv2/Number.swift"
-            timestampString = "577917367.632141"
+            timestampString = "577923866.984105"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
             landmarkName = "addDigit(digit:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -186,12 +106,26 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HelloWorldv2/MathFrame.swift"
-            timestampString = "577917367.632472"
+            timestampString = "577923866.9842401"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "244"
-            endingLineNumber = "244"
-            landmarkName = "sendDigit(digit:)"
+            startingLineNumber = "43"
+            endingLineNumber = "43">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HelloWorldv2/Number.swift"
+            timestampString = "577923866.9844919"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "toString()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -202,12 +136,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HelloWorldv2/Number.swift"
-            timestampString = "577917367.632725"
+            timestampString = "577923866.984727"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "66"
-            endingLineNumber = "66"
-            landmarkName = "toString()"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
+            landmarkName = "getDecimalPlaceMultiplier()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HelloWorldv2/Number.swift"
+            timestampString = "577923866.9847929"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
+            landmarkName = "roundDoubleToPlace(num:place:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HelloWorldv2/ViewController.swift"
+            timestampString = "577923866.984854"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "134"
+            endingLineNumber = "134"
+            landmarkName = "displayNumber()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
