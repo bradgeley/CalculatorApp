@@ -16,8 +16,8 @@ class ViewController: UIViewController {
     let ADD_TAG = 11, SUB_TAG = 12, MUL_TAG = 13, DIV_TAG = 14, EQUALS_TAG = 15
     
     //operator button colors
-    let DEFAULT_OP_COLOR:UIColor = UIColor(cgColor: #colorLiteral(red: 1, green: 0.6636318564, blue: 0, alpha: 1))
-    let PRESSED_OP_COLOR:UIColor = UIColor(cgColor: #colorLiteral(red: 0.798058331, green: 0.5282882452, blue: 0.02409346029, alpha: 1))
+    let DEFAULT_ORANGE:UIColor = UIColor(cgColor: #colorLiteral(red: 1, green: 0.6636318564, blue: 0, alpha: 1))
+    let HIGHLIGHTED_ORANGE:UIColor = UIColor(cgColor: #colorLiteral(red: 0.798058331, green: 0.5282882452, blue: 0.02409346029, alpha: 1))
     
     //Global variable to update calculator number display
     @IBOutlet weak var numLabel: UILabel!
@@ -39,6 +39,8 @@ class ViewController: UIViewController {
         
         mfInstance = MathFrame()
         
+        updateDisplay()
+        
         //Do any additional setup after loading the view.
         
     }
@@ -55,7 +57,9 @@ class ViewController: UIViewController {
      */
 
     @IBAction func AllClear(_ sender: Any) {
-        
+        //Stub
+        mfInstance.clear()
+        updateDisplay()
     }
     
     func swapClearButton() {
@@ -64,6 +68,8 @@ class ViewController: UIViewController {
         } else {
             clearButton.setTitle("AC", for: .normal)
         }
+        
+        updateDisplay()
     }
     
     /* ChangeSign
@@ -73,6 +79,7 @@ class ViewController: UIViewController {
     
     @IBAction func ChangeSign(_ sender: Any) {
         mfInstance.changeSign()
+        updateDisplay()
     }
     
     /* Decimal
@@ -82,6 +89,7 @@ class ViewController: UIViewController {
     
     @IBAction func Decimal(_ sender: Any) {
         mfInstance.addDecimal()
+        updateDisplay()
     }
     
     /* Percent
@@ -91,6 +99,7 @@ class ViewController: UIViewController {
     
     @IBAction func Percent(_ sender: Any) {
         mfInstance.percent()
+        updateDisplay()
     }
     
 
@@ -100,15 +109,13 @@ class ViewController: UIViewController {
      * Changes the "All Clear" button to "Clear" when numbers have been typed.
      * Clear only clears the current number being typed, not all data, once
      * it has been changed.
-     *
-     * 
      */
     
     @IBAction func numberPressed(_ sender: Any) {
         
         let tag = (sender as! UIButton).tag
-        let digit = (tag - 1)
-        mfInstance.sendDigit(num: digit)
+        let num = (tag - 1)
+        mfInstance.sendDigit(digit: num)
         updateDisplay()
 
     }
@@ -121,7 +128,9 @@ class ViewController: UIViewController {
         updateDisplay()
     }
     
-    //
+/* Internal Display Functions */
+    
+    //Asks the Math Frame for displayable data, then displays the data.
     func updateDisplay() {
     
         let currentNumber:Number = mfInstance.getCurrentNumber()
@@ -135,30 +144,30 @@ class ViewController: UIViewController {
     func highlightOperator(op:Operator) {
         
         //Reset highlights
-        addButton.backgroundColor = DEFAULT_OP_COLOR
-        subButton.backgroundColor = DEFAULT_OP_COLOR
-        mulButton.backgroundColor = DEFAULT_OP_COLOR
-        divButton.backgroundColor = DEFAULT_OP_COLOR
+        addButton.backgroundColor = DEFAULT_ORANGE
+        subButton.backgroundColor = DEFAULT_ORANGE
+        mulButton.backgroundColor = DEFAULT_ORANGE
+        divButton.backgroundColor = DEFAULT_ORANGE
 
         
         //Highlight addition
         if (op.opID == ADD_TAG) {
-            addButton.backgroundColor = PRESSED_OP_COLOR
+            addButton.backgroundColor = HIGHLIGHTED_ORANGE
         }
         
         //Highlight subtraction
         if (op.opID == SUB_TAG) {
-            subButton.backgroundColor = PRESSED_OP_COLOR
+            subButton.backgroundColor = HIGHLIGHTED_ORANGE
         }
         
         //Highlight multiplication
         if (op.opID == MUL_TAG) {
-            mulButton.backgroundColor = PRESSED_OP_COLOR
+            mulButton.backgroundColor = HIGHLIGHTED_ORANGE
         }
         
         //Highlight division
         if (op.opID == DIV_TAG) {
-            divButton.backgroundColor = PRESSED_OP_COLOR
+            divButton.backgroundColor = HIGHLIGHTED_ORANGE
         }
         
     }

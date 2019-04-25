@@ -241,8 +241,9 @@ class MathFrame {
     }
     
     //ViewController will send digits to the frame once they are complete
-    func sendDigit(num:Int) {
-        
+    func sendDigit(digit:Int) {
+        //stub
+        self.currentNumber.addDigit(digit: digit)
     }
     
     //Allows ViewController to send an operator into the Math Frame instance
@@ -253,27 +254,32 @@ class MathFrame {
     
     //Clear both Arrays and start from scratch
     func allClear() {
-        
+        //stub
+        self.currentNumber = Number()
     }
     
     //Clear current number only and allow for new number input
     func clear() {
-        
+        //stub
+        self.currentNumber = Number()
     }
     
     //Change sign of current Number
     func changeSign() {
-        
+        //stub
+        self.currentNumber.changeSign()
     }
     
     //Adds decimal (if possible) to current Number
     func addDecimal() {
-        
+        //stub
+        self.currentNumber.addDecimal()
     }
     
     //Divides current Number by 100
     func percent() {
-        
+        //stub
+        self.currentNumber = resolve(lhs: currentNumber, Op: Operator(opID: 14), rhs: Number(num: "100"))
     }
     
     //Changes which number is being displayed by the calculator
@@ -283,7 +289,7 @@ class MathFrame {
     
     func getCurrentNumber() -> Number {
         //stub
-        return Number()
+        return self.currentNumber
     }
     
     func setCurrentOperator(op: Operator) {

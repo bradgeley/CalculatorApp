@@ -19,6 +19,8 @@ import Foundation
 
 class Number {
     
+    let MAX_DIGITS = 15
+    
     var positive:Bool = true
     var prefix:Int = 0
     var decimal:Bool = false
@@ -69,32 +71,64 @@ class Number {
         result = result + String(prefix)
         if (self.decimal) {
             result = result + "."
-            let leadingOne:Int = Int(pow(Double(10),Double(self.suffixDigits)))
-            let noLeadingOne = self.suffix - leadingOne
-            var activeDigits = String(noLeadingOne)
-            var numActiveDigits = activeDigits.count
+            if (suffixDigits != 0) {
+                let leadingOne:Int = Int(pow(Double(10),Double(self.suffixDigits)))
+                let noLeadingOne = self.suffix - leadingOne
+                var activeDigits = String(noLeadingOne)
+                var numActiveDigits = activeDigits.count
             
-            //The only way these two values arent the same is if there were leading 0s
-            while (numActiveDigits != self.suffixDigits) {
-                numActiveDigits += 1
-                activeDigits = "0" + activeDigits
-            }
+                //The only way these two values arent the same is if there were leading 0s
+                while (numActiveDigits != self.suffixDigits) {
+                    numActiveDigits += 1
+                    activeDigits = "0" + activeDigits
+                }
             result = result + activeDigits
+            }
         }
         return result
     }
 
     /*Number class handles all digit adding internally*/
     func addDigit(digit:Int) {
+        /*if (self.toDouble() == 0) {
+            self.prefix = digit
+        } else {
+            if (!decimal) {
+                self.prefix *= 10
+                self.prefix += digit
+            } else {
+                self.suffix *= 10
+                self.suffix += digit
+                self.suffixDigits += 1
+            }*/
         if (!decimal) {
-            self.prefix *= 10
-            self.prefix += digit
+            if (self.toDouble() == 0) {
+                self.prefix = digit
+            } else {
+                self.prefix *= 10
+                self.prefix += digit
+            }
         } else {
             self.suffix *= 10
             self.suffix += digit
             self.suffixDigits += 1
         }
     }
+        
+        /*
+        if (!decimal) {
+            if (self.toDouble() == 0) {
+                self.prefix = digit
+            } else {
+                self.prefix *= 10
+                self.prefix += digit
+         } else {
+            self.suffix *= 10
+            self.suffix += digit
+            self.suffixDigits += 1
+         }
+         
+         */
     
     func addDecimal() {
         self.decimal = true
@@ -102,10 +136,6 @@ class Number {
     
     func changeSign() {
         self.positive = !self.positive
-    }
-    
-    func getSigFigs() -> Int {
-        return 100
     }
 
     //Addition Function for Number Class
