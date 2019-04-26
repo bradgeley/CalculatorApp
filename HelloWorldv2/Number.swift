@@ -64,17 +64,7 @@ class Number {
     }
     
     
-/* String Manipulation Functions */
-    
-    func addCommas(num:String) -> String {
-        return self.string //stub
-    }
-    
-    func removeCommas(num:String) -> String {
-        return self.string //stub
-    }
-    
-    
+
 /* Conversion functions */
     
     func toDouble() -> Double {

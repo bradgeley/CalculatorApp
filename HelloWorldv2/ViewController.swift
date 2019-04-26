@@ -167,6 +167,11 @@ class ViewController: UIViewController {
         
         //Set label text to current Number, according to Math Frame
         numLabel.text = currentNumber.string
+        
+        //TEST
+        var testNumber:String = "10540,00,0100.000005"
+        testNumber = addCommas(num: testNumber)
+        numLabel.text = testNumber
     }
     
     //First resets all highlights to default, then highlights correct operator
@@ -198,6 +203,72 @@ class ViewController: UIViewController {
         }
         
     }
+    
+    /* String Manipulation Functions */
+    
+    func addCommas(num:String) -> String {
+        
+        let numBackwards:String = String(removeCommas(num: num).reversed())
+        var numWithCommas:String = ""
+        var numRemaining = numBackwards
+        var count = 0
+            
+        for char in numBackwards {
+            
+            numWithCommas += String(char)
+            numRemaining = String(numRemaining.dropFirst())
+            count += 1
+                
+            if (count == 3) {
+                if (numRemaining.count >= 1) {
+                    numWithCommas += ","
+                }
+                count = 0
+            }
+        }
+        return String(numWithCommas.reversed())
+    }
+    
+    func removeCommas(num:String) -> String {
+        let removedCharacter:Character = ","
+        var result = num
+        
+        //Use apple code to remove all commas
+        result.removeAll(where: { removedCharacter == $0 } )
+        
+        return result
+    }
+    
+    /*
+     
+     func addCommas(num:String) -> String {
+     
+     let numBackwards:String = String(num.reversed())
+     var numWithCommas:String = ""
+     var numRemaining = numBackwards
+     var count = 0
+     
+     for char in numBackwards {
+     
+     numWithCommas += String(char)
+     numRemaining = String(numRemaining.dropFirst())
+     count += 1
+     
+     if (count == 3) {
+     
+     if (numRemaining.count >= 1) {
+     numWithCommas += ","
+     }
+     count = 0
+     
+     }
+     
+     }
+     
+     return String(numWithCommas.reversed())
+     
+     }*/
+    
 
 }
 
