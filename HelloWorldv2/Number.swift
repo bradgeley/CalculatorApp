@@ -14,6 +14,8 @@ import Foundation
  * The main function of the Number class is to be able to easily
  * build a Number digit by digit in the same way that users will be
  * clicking buttons in the calculator.
+ *
+ * Once math has been performed on a number, it is no longer editable
  */
 
 
@@ -43,9 +45,8 @@ class Number {
 
     }
     
-    //stub, doesnt work when String(Double) converts to scientific notation
-    //Also fails when Double rounds to weird numbers
-    //Should only be used for the uneditable answer
+    //Used to initialize the answer of arithmetic into a new Number. \
+    //Not editable, due to String(Double) functionality
     init (num:Double) {
         self.string = String(num)
         self.isEditable = false
@@ -60,7 +61,7 @@ class Number {
     //Initializer from an Integer, most likely never used. Might delete later.
     init (num:Int) {
         self.string = String(num)
-        self.isEditable = true
+        self.isEditable = false
     }
     
     

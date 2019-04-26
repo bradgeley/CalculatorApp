@@ -54,7 +54,9 @@ class MathFrame {
     //Allows ViewController to send digits over so the Math Frame can process if
     //The user is typing a new number or adding to an old number
     func sendDigit(digit:Int) {
-        //Stub, always just acts like user is adding to an existing number
+        if (!self.currentNumber.isEditable) {
+            self.currentNumber = Number()
+        }
         self.currentNumber.addDigit(digit: String(digit))
     }
     
@@ -62,6 +64,7 @@ class MathFrame {
     func sendOperator(op:Operator) {
         //stub
         self.currentOperator = op
+        self.currentNumber.isEditable = false
     }
     
     //Clear both Arrays and start from scratch

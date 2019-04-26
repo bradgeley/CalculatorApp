@@ -167,11 +167,7 @@ class ViewController: UIViewController {
         
         //Set label text to current Number, according to Math Frame
         numLabel.text = currentNumber.string
-        
-        //TEST
-        var testNumber:String = "10540,00,0100.000005"
-        testNumber = addCommas(num: testNumber)
-        numLabel.text = testNumber
+
     }
     
     //First resets all highlights to default, then highlights correct operator
@@ -204,30 +200,79 @@ class ViewController: UIViewController {
         
     }
     
-    /* String Manipulation Functions */
+    
+/* String Manipulation Functions */
+    
+    /* Add Commas
+     * ----------
+     * Takes any permutation of a number that is possible for the Calculator to display,
+     * and adds commas.
+     *
+     * Add commas should only be used when DISPLAYING a number on the calculator.
+     */
     
     func addCommas(num:String) -> String {
         
-        let numBackwards:String = String(removeCommas(num: num).reversed())
+        //If the number is in scientific notation, do nothing
+        if (num.contains("e") || num.contains("E")) {
+            return num
+        }
+        
+        //Remove commas, if any
+        let numWithNoCommas = removeCommas(num: num)
+        
+        //Take off and save the sign, if its negative
+        var sign:String = ""
+        var numWithNoSign = numWithNoCommas
+        if (num.contains("-")) {
+            //Save the sign
+            sign = "-"
+            //Drop the sign
+            numWithNoSign = String(numWithNoSign.dropFirst())
+        }
+        
+        //Split the number string by the decimal, if one exists
+        let numSplitByDecimal:Array<Substring> = numWithNoSign.split(separator: Character("."), maxSplits: 1, omittingEmptySubsequences: true)
+        
+        //Initializers to save each side of the split (if a split occured)
+        let numWithNoDecimal:String = String(numSplitByDecimal[0])
+        var decimal:String = ""
+        
+        //If a split did occur, save the decimal and add back the delimeter
+        if (numSplitByDecimal.count > 1) {
+            decimal = "." + String(numSplitByDecimal[1])
+        }
+        
+        //Initializers to add commas to everything on the left of decimal
+        let numBackwards:String = String(numWithNoDecimal.reversed())
         var numWithCommas:String = ""
+        
+        //as we iterate through numBackwards, numRemaining will show only the numbers we have not yet counted
         var numRemaining = numBackwards
+        
+        //Iterate through numBackwards, adding each character and comma to the blank String numWithCommas
         var count = 0
-            
         for char in numBackwards {
-            
             numWithCommas += String(char)
             numRemaining = String(numRemaining.dropFirst())
             count += 1
-                
+            
             if (count == 3) {
+                //The following if-statement prevents cases where the number length is multiple of 3 (e.g. ,100,000)
                 if (numRemaining.count >= 1) {
                     numWithCommas += ","
                 }
                 count = 0
             }
         }
-        return String(numWithCommas.reversed())
+        //Reverse the String back to normal, and add back the decimal/sign
+        return String(sign + String((numWithCommas.reversed() + decimal)))
     }
+    
+    /* Remove Commas
+     * -------------
+     * Simply uses the removeAll(where:) function to find commas.
+     */
     
     func removeCommas(num:String) -> String {
         let removedCharacter:Character = ","
@@ -239,36 +284,5 @@ class ViewController: UIViewController {
         return result
     }
     
-    /*
-     
-     func addCommas(num:String) -> String {
-     
-     let numBackwards:String = String(num.reversed())
-     var numWithCommas:String = ""
-     var numRemaining = numBackwards
-     var count = 0
-     
-     for char in numBackwards {
-     
-     numWithCommas += String(char)
-     numRemaining = String(numRemaining.dropFirst())
-     count += 1
-     
-     if (count == 3) {
-     
-     if (numRemaining.count >= 1) {
-     numWithCommas += ","
-     }
-     count = 0
-     
-     }
-     
-     }
-     
-     return String(numWithCommas.reversed())
-     
-     }*/
-    
-
 }
 
