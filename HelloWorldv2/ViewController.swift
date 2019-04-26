@@ -149,7 +149,6 @@ class ViewController: UIViewController {
     
     //Asks the Math Frame for displayable data, then displays the data.
     func updateDisplay() {
-        
         //Update display for number first
         displayNumber()
         
@@ -166,7 +165,7 @@ class ViewController: UIViewController {
         let currentNumber:Number = mfInstance.getCurrentNumber()
         
         //Set label text to current Number, according to Math Frame
-        numLabel.text = currentNumber.string
+        numLabel.text = addCommas(num: currentNumber.string)
 
     }
     
@@ -236,11 +235,11 @@ class ViewController: UIViewController {
         
         //Initializers to save each side of the split (if a split occured)
         let numWithNoDecimal:String = String(numSplitByDecimal[0])
-        var decimal:String = ""
+        var decimal:String = (num.contains(".") ? "." : "")
         
         //If a split did occur, save the decimal and add back the delimeter
         if (numSplitByDecimal.count > 1) {
-            decimal = "." + String(numSplitByDecimal[1])
+            decimal += String(numSplitByDecimal[1])
         }
         
         //Initializers to add commas to everything on the left of decimal

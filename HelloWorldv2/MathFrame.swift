@@ -48,6 +48,32 @@ class MathFrame {
         currentOperator = Operator()
     }
     
+    var description: String {
+        var description:String = "<\(type(of: self)):"
+        
+        var count:Int = 0
+        for Number in self.numQueue {
+            description = description + " (" + Number.string + ")"
+            if (count < operatorQueue.count) {
+                if (self.operatorQueue[count].opID == ADD_TAG) {
+                    description = description + " " + "+"
+                }
+                if (self.operatorQueue[count].opID == SUB_TAG) {
+                    description = description + " " + "-"
+                }
+                if (self.operatorQueue[count].opID == MUL_TAG) {
+                    description = description + " " + "*"
+                }
+                if (self.operatorQueue[count].opID == DIV_TAG) {
+                    description = description + " " + "/"
+                }
+            }
+            count += 1
+        }
+
+        return description
+    }
+    
     
 /* Calculator Button Command Processors */
     
@@ -65,29 +91,41 @@ class MathFrame {
         //stub
         self.currentOperator = op
         self.currentNumber.isEditable = false
+        numQueue.append(self.currentNumber)
+        
+        //If the operator was not the equals button
+        if (op.opID != EQUALS_TAG) {
+            operatorQueue.append(op)
+        } else { //pressed equals button
+            resolveTree()
+        }
     }
     
     //Clear both Arrays and start from scratch
     func allClear() {
-        //stub
         self.currentNumber = Number()
+        self.numQueue.removeAll()
+        self.operatorQueue.removeAll()
     }
     
     //Clear current number only and allow for new number input
     func clear() {
-        //stub
         self.currentNumber = Number()
     }
     
     //Change sign of current Number
     func changeSign() {
-        //stub
+        if (!self.currentNumber.isEditable) {
+            self.currentNumber = Number()
+        }
         self.currentNumber.changeSign()
     }
     
-    //Adds decimal (if possible) to current Number
+    //Adds decimal (if possible) to current Numbers
     func addDecimal() {
-        //Stub: User may be starting a new number by typing "."
+        if (!self.currentNumber.isEditable) {
+            self.currentNumber = Number()
+        }
         self.currentNumber.addDecimal()
     }
     
@@ -115,6 +153,21 @@ class MathFrame {
     
     
 /* Arithmetic Functions */
+    
+    /* Resolve Tree
+     * ------------
+     * The big boy function. The one ive dreaded to write.
+     * How to resolve the tree of Numbers and Operators into
+     * an answer once the user has clicked "="
+     *
+     * Uses a ?recursive loop? or normal loop to solve the tree
+     * ?one operator at a time?
+     * using multiplication and division first.
+     */
+    
+    func resolveTree() {
+        
+    }
     
     
     //Solves an operation with 2 Numbers and an Operator

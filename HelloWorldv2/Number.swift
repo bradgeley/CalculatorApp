@@ -16,6 +16,9 @@ import Foundation
  * clicking buttons in the calculator.
  *
  * Once math has been performed on a number, it is no longer editable
+ * The Math Frame handles whether or not to pass a digit to the Number,
+ * and assigns the editable value to the Number as user input is handled.
+ * Therefore, the Number class needs no checks when passed data.
  */
 
 
@@ -84,7 +87,9 @@ class Number {
 
     //Adds decimal to Number
     func addDecimal() {
-        self.string += "."
+        if (!self.string.contains(".")) {
+            self.string += "."
+        }
     }
     
     //Changes sign of Number string by dropping the first character, or adding the "-" to the beginning
