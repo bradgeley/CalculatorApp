@@ -14,6 +14,9 @@ import Foundation
 
 class MathFrame {
     
+    //global constants
+    let ADD_TAG = 11, SUB_TAG = 12, MUL_TAG = 13, DIV_TAG = 14, EQUALS_TAG = 15
+    
     //Arrays for keeping track of multiple Numbers and Operators at once
     var numQueue:Array<Number>
     var operatorQueue:Array<Operator>

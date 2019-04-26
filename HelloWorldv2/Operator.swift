@@ -10,6 +10,9 @@ import Foundation
 
 class Operator {
     
+    //global constants
+    let ADD_TAG = 11, SUB_TAG = 12, MUL_TAG = 13, DIV_TAG = 14, EQUALS_TAG = 15
+    
     //Unique identifier for operator
     var opID:Int
     
@@ -44,7 +47,7 @@ class Operator {
     }
     
     func getPriority() -> Int {
-        return (self.opID == 13 || self.opID == 14 ? 2 : 1)
+        return (self.opID == MUL_TAG || self.opID == DIV_TAG ? 2 : 1)
     }
     
 }

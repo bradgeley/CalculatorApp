@@ -166,7 +166,7 @@ class ViewController: UIViewController {
         let currentNumber:Number = mfInstance.getCurrentNumber()
         
         //Set label text to current Number, according to Math Frame
-        numLabel.text = "0"
+        numLabel.text = currentNumber.string
     }
     
     //First resets all highlights to default, then highlights correct operator

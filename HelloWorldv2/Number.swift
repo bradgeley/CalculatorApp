@@ -30,26 +30,37 @@ class Number {
     
     //All Number data is stored as a string for easy digit appending
     var string:String
+    //Idea for a way to track whether or not a number is an answer or an ongoing number
+    var isEditable:Bool
     
     
 /* Initializers */
     
+    //Most used initializer, used for creating new blank number templates
     init () {
         self.string = "0"
+        self.isEditable = true
+
     }
     
     //stub, doesnt work when String(Double) converts to scientific notation
     //Also fails when Double rounds to weird numbers
+    //Should only be used for the uneditable answer
     init (num:Double) {
         self.string = String(num)
+        self.isEditable = false
     }
     
+    //Initializer from a full number String. Not editable.
     init (num:String) {
         self.string = num
+        self.isEditable = false
     }
     
+    //Initializer from an Integer, most likely never used. Might delete later.
     init (num:Int) {
         self.string = String(num)
+        self.isEditable = true
     }
     
     
@@ -74,6 +85,9 @@ class Number {
 /* Calculator button functions */
     
     func addDigit(digit:String) {
+        if (withoutSign(numString: self.string) == "0") {
+            self.string = String(self.string.dropLast())
+        }
         self.string += digit
     }
 
@@ -82,14 +96,20 @@ class Number {
         self.string += "."
     }
     
-    //Changes sign of Number
+    //Changes sign of Number string by dropping the first character, or adding the "-" to the beginning
     func changeSign() {
         if (!self.string.contains("-")) {
             self.string = "-" + self.string
-        }
-        
-        if (self.string.contains("-")) {
+        } else {
             self.string = String(self.string.dropFirst())
         }
+    }
+    
+    func withoutSign(numString:String) -> String {
+        var result = numString
+        if (numString.contains("-")) {
+            result = String(numString.dropFirst())
+        }
+        return result
     }
 }
