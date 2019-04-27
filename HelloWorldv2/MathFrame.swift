@@ -48,8 +48,14 @@ class MathFrame {
         currentOperator = Operator()
     }
     
+    /* description
+     * -----------
+     * Prints all Numbers and Operators in the Math Frame in the form:
+     * "MathFrame: (-9.36) + (3.15) * (6.25) / (6.3232) + (100000.25)"
+     */
+    
     var description: String {
-        var description:String = "<\(type(of: self)):"
+        var description:String = "\(type(of: self)):"
         
         var count:Int = 0
         for Number in self.numQueue {
@@ -77,8 +83,12 @@ class MathFrame {
     
 /* Calculator Button Command Processors */
     
-    //Allows ViewController to send digits over so the Math Frame can process if
-    //The user is typing a new number or adding to an old number
+    /* sendDigit
+     * ---------
+     * Allows ViewController to send digits over so the Math Frame can process if
+     * The user is typing a new number or adding to an old number
+     */
+    
     func sendDigit(digit:Int) {
         if (!self.currentNumber.isEditable) {
             self.currentNumber = Number()
@@ -86,7 +96,12 @@ class MathFrame {
         self.currentNumber.addDigit(digit: String(digit))
     }
     
-    //Allows ViewController to send an operator into the Math Frame instance
+    /* sendOperator
+     * ---------
+     * Allows ViewController to send an operator into the Math Frame instance
+     * Possible operators are tags 11-15, or "+", "-", "*", "/", and "=", respectively
+     */
+
     func sendOperator(op:Operator) {
         //stub
         self.currentOperator = op
@@ -97,21 +112,40 @@ class MathFrame {
         if (op.opID != EQUALS_TAG) {
             operatorQueue.append(op)
         } else { //pressed equals button
-            resolveTree()
+            do {
+                try self.currentNumber = resolveTree()
+            } catch {
+                
+            }
         }
     }
     
-    //Clear both Arrays and start from scratch
+    /* allClear and Clear
+     * ------------------
+     * Clear corresponds to the "C" button, whereas the All Clear function
+     * corresponds to the "AC" button.
+     *
+     * Clear simply refreshes the current number being typed by the user,
+     * allowing them to enter a completely different number, but keeping their
+     * previous entries in tact.
+     *
+     * All Clear clears the entire frame, as if the user has not yet typed anything,
+     * allowing them to start from scratch.
+     */
+    
     func allClear() {
         self.currentNumber = Number()
         self.numQueue.removeAll()
         self.operatorQueue.removeAll()
     }
     
-    //Clear current number only and allow for new number input
     func clear() {
         self.currentNumber = Number()
     }
+    
+    /* allClear and Clear
+     * ------------------
+     */
     
     //Change sign of current Number
     func changeSign() {
@@ -121,6 +155,10 @@ class MathFrame {
         self.currentNumber.changeSign()
     }
     
+    /* allClear and Clear
+     * ------------------
+     */
+    
     //Adds decimal (if possible) to current Numbers
     func addDecimal() {
         if (!self.currentNumber.isEditable) {
@@ -129,10 +167,24 @@ class MathFrame {
         self.currentNumber.addDecimal()
     }
     
+    /* allClear and Clear
+     * ------------------
+     */
+    
     //Divides current Number by 100
     func percent() {
-        self.currentNumber = resolve(lhs: currentNumber, Op: Operator(opID: 14), rhs: Number(num: "100"))
+        do {
+            try self.currentNumber = resolve(lhs: currentNumber, Op: Operator(opID: 14), rhs: Number(num: "100"))
+        } catch {
+            //Should never produce an error, but resolve makes me put the do/catch in here
+        }
     }
+    
+    /* Get/Set Current Number
+     * ----------------------
+     * Current Number describes the number that the user is currently typing,
+     * or the last number that the user completed typing.
+     */
     
     //Changes which number is being displayed by the calculator
     func setCurrentNumber(num:Number) {
@@ -142,6 +194,13 @@ class MathFrame {
     func getCurrentNumber() -> Number {
         return self.currentNumber
     }
+    
+    /* Get/Set Current Operator
+     * ------------------------
+     * The current Operator describes the last operator that the user
+     * typed, and may be changed by overriding with another operator button
+     * press (including by just pressing equals)
+     */
     
     func setCurrentOperator(op: Operator) {
         self.currentOperator = op
@@ -163,46 +222,79 @@ class MathFrame {
      * Uses a ?recursive loop? or normal loop to solve the tree
      * ?one operator at a time?
      * using multiplication and division first.
+     *
+     * The return Number is the result of the resolved equations
      */
     
-    func resolveTree() {
-        
+    func resolveTree() throws -> Number {
+        var result:Number = Number()
+        do {
+            //Stub, only does first calculation
+            try result = resolve(lhs: self.numQueue[0], Op: self.operatorQueue[0], rhs: self.numQueue[1])
+        } catch {
+            //Stub error handling, always returns 0
+            return Number()
+        }
+        return result
     }
     
     
-    //Solves an operation with 2 Numbers and an Operator
-    func resolve(lhs:Number, Op:Operator, rhs:Number) -> Number {
+    /* Resolve
+     * -------
+     * Solves the math between two numbers and the operator between.
+     * Order is important, having the user's first entered number
+     * always on the lhs.
+     * Supplies the result as a new Number, which is uneditable.
+     * Throws Divide by Zero error.
+     */
+    
+    func resolve(lhs:Number, Op:Operator, rhs:Number) throws -> Number {
         
         //Convert Numbers to Doubles for arithmetic
         let lhsDouble:Double = lhs.toDouble()
         let rhsDouble:Double = rhs.toDouble()
+        
         var resultDouble:Double = 0
         
         //Addition
-        if (Op.opID == 11) {
+        if (Op.opID == ADD_TAG) {
             resultDouble = lhsDouble + rhsDouble
         }
         
         //Subtraction
-        if (Op.opID == 12) {
+        if (Op.opID == SUB_TAG) {
             resultDouble = lhsDouble - rhsDouble
         }
         
         //Multiplication
-        if (Op.opID == 13) {
+        if (Op.opID == MUL_TAG) {
             resultDouble = lhsDouble * rhsDouble
         }
         
         //Division
-        if (Op.opID == 14 && rhsDouble != 0) {
-            resultDouble = lhsDouble / rhsDouble
-        } else if (rhsDouble == 0) {
-            //display error (DIV/0)
+        if (Op.opID == DIV_TAG) {
+            if (rhsDouble == 0) {
+                throw mathError.divByZero
+            } else {
+                resultDouble = lhsDouble / rhsDouble
+            }
         }
         
         //Convert answer back to a Number
-        let resultString:String = String(resultDouble)
+        let resultString:String = String(resultDouble) //May return as scientific notation
         return Number(num:resultString)
+    }
+    
+/* Error Handling */
+    
+    /* Throw Error
+     * -----------
+     * Only error currently allowed is DIV/0
+     * Displays the error in the text bar when one is thrown.
+     */
+    
+    enum mathError: Error {
+        case divByZero
     }
     
 }
