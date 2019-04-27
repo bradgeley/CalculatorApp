@@ -58,5 +58,4 @@ class Operator {
     func getPriority() -> Int {
         return (self.opID == MUL_TAG || self.opID == DIV_TAG ? 2 : 1)
     }
-    
 }

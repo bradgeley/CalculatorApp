@@ -256,59 +256,65 @@ class MathFrame {
      */
     
     func resolveAllRecursively() throws {
-        //if (self.operatorQueue.count > 0) {
-            for n in 0..<self.operatorQueue.count {
-                //Step 1: figure out what our numbers/operator are
-                let op:Operator = self.operatorQueue[n]
-                let lhs:Number = self.numQueue[n]
-                let rhs:Number = self.numQueue[n+1]
-                var result:Number = Number()
-                //Higher priority goes first
-                if (op.opID == MUL_TAG || op.opID == DIV_TAG) {
-                    do {
-                    //Step two, resolve them
-                        result = try resolve(lhs: lhs, Op: op, rhs: rhs)
-                    //Step three, adjust the tree to show the operation has been completed
-                        //Insert the result in the spot where the first number was
-                        self.numQueue[n] = result
-                        //Remove the operator
-                        self.operatorQueue.remove(at: n)
-                        //remove the Number where rhs was
-                        numQueue.remove(at: n+1)
-                    //Step four, recur so that any other multiplication is done first
-                        if (operatorQueue.count > 0) {
-                            try resolveAllRecursively()
-                            return
-                        }
-                    } catch {
-                        self.allClear()
+        for n in 0..<self.operatorQueue.count {
+            //Step 1: figure out what our numbers/operator are
+            let op:Operator = self.operatorQueue[n]
+            let lhs:Number = self.numQueue[n]
+            let rhs:Number = self.numQueue[n+1]
+            var result:Number = Number()
+            //Higher priority goes first
+            if (op.opID == MUL_TAG || op.opID == DIV_TAG) {
+                do {
+                //Step two, resolve them
+                    result = try resolve(lhs: lhs, Op: op, rhs: rhs)
+                //Step three, adjust the tree to show the operation has been completed
+                    //Insert the result in the spot where the first number was
+                    self.numQueue[n] = result
+                    //Remove the operator
+                    self.operatorQueue.remove(at: n)
+                    //remove the Number where rhs was
+                    numQueue.remove(at: n+1)
+                //Step four, recur so that any other multiplication is done first
+                    if (operatorQueue.count > 0) {
+                        try resolveAllRecursively()
+                        return
                     }
-                }
-                //BUG: Addition just happens first anyway.
-                //Check if theres any more operators left
-                //If the operator to the right side has higher priority, dont do anything, else add?
-                if (op.opID == ADD_TAG || op.opID == SUB_TAG) {
-                    do {
-                        //Step two, resolve them
-                        result = try resolve(lhs: lhs, Op: op, rhs: rhs)
-                        //Step three, adjust the tree to show the operation has been completed
-                        //Insert the result in the spot where the first number was
-                        self.numQueue[n] = result
-                        //Remove the operator
-                        self.operatorQueue.remove(at: n)
-                        //remove the Number where rhs was
-                        numQueue.remove(at: n+1)
-                        //Step four, recur so that any other multiplication is done first
-                        if (operatorQueue.count > 0) {
-                            try resolveAllRecursively()
-                            return
-                        }
-                    } catch {
-                        self.allClear()
-                    }
+                } catch {
+                    self.allClear()
                 }
             }
-        //}
+            //Check if theres any more operators left
+            //If the Operator Queue has any more multiplication or division, skip
+            if (!containsMultOperators(arr: self.operatorQueue) && (op.opID == ADD_TAG || op.opID == SUB_TAG)) {
+                do {
+                    //Step two, resolve them
+                    result = try resolve(lhs: lhs, Op: op, rhs: rhs)
+                    //Step three, adjust the tree to show the operation has been completed
+                    //Insert the result in the spot where the first number was
+                    self.numQueue[n] = result
+                    //Remove the operator
+                    self.operatorQueue.remove(at: n)
+                    //remove the Number where rhs was
+                    numQueue.remove(at: n+1)
+                    //Step four, recur so that any other multiplication is done first
+                    if (operatorQueue.count > 0) {
+                        try resolveAllRecursively()
+                        return
+                    }
+                } catch {
+                    self.allClear()
+                }
+            }
+        }
+    }
+    
+    func containsMultOperators(arr: Array<Operator>) -> Bool {
+        for op in arr {
+            if (op.opID == MUL_TAG || op.opID == DIV_TAG) {
+                return true
+            }
+        }
+        return false
     }
     
     /* Resolve
