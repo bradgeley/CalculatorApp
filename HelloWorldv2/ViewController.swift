@@ -159,6 +159,10 @@ class ViewController: UIViewController {
         //Set clear button to show correct text, according to Math Frame
         let correctClearTitle:String = (mfInstance.clearButtonShowsAC ? "AC" : "C")
         clearButton.setTitle(correctClearTitle, for: .normal)
+        
+        //Math Frame Testing
+        numLabel.adjustsFontSizeToFitWidth = true
+        numLabel.text = mfInstance.description
     }
     
     func displayNumber() {

@@ -143,11 +143,13 @@ class MathFrame {
         self.currentNumber = Number()
     }
     
-    /* allClear and Clear
-     * ------------------
+    /* changeSign
+     * ----------
+     * Changes the sign of the current number, or starts a new
+     * Number that begins with "-0" where the "0" can still be
+     * replaced with a digit.
      */
     
-    //Change sign of current Number
     func changeSign() {
         if (!self.currentNumber.isEditable) {
             self.currentNumber = Number()
@@ -155,11 +157,14 @@ class MathFrame {
         self.currentNumber.changeSign()
     }
     
-    /* allClear and Clear
-     * ------------------
+    /* addDecimal
+     * ----------
+     * Either creates a new number starting with "0.", or
+     * adds a decimal to the current number being typed.
+     *
+     * Handled in the Number Class.
      */
     
-    //Adds decimal (if possible) to current Numbers
     func addDecimal() {
         if (!self.currentNumber.isEditable) {
             self.currentNumber = Number()
@@ -167,16 +172,16 @@ class MathFrame {
         self.currentNumber.addDecimal()
     }
     
-    /* allClear and Clear
-     * ------------------
+    /* percent
+     * -------
+     * Divides the current number by 100, and makes it uneditable.
      */
     
-    //Divides current Number by 100
     func percent() {
         do {
             try self.currentNumber = resolve(lhs: currentNumber, Op: Operator(opID: 14), rhs: Number(num: "100"))
         } catch {
-            //Should never produce an error, but resolve makes me put the do/catch in here
+            //Never produces an error
         }
     }
     
@@ -186,7 +191,6 @@ class MathFrame {
      * or the last number that the user completed typing.
      */
     
-    //Changes which number is being displayed by the calculator
     func setCurrentNumber(num:Number) {
         self.currentNumber = num
     }
