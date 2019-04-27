@@ -41,13 +41,21 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pB7-O0-H6L" userLabel="Math Frame Label">
+                                                <rect key="frame" x="10" y="10" width="12.5" height="24"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="qBj-f7-688" firstAttribute="top" secondItem="IMX-oJ-oFR" secondAttribute="top" constant="10" id="GTp-ZC-wsT"/>
                                             <constraint firstAttribute="trailing" secondItem="qBj-f7-688" secondAttribute="trailing" constant="15" id="SYt-UD-KPk"/>
+                                            <constraint firstItem="pB7-O0-H6L" firstAttribute="top" secondItem="IMX-oJ-oFR" secondAttribute="top" constant="10" id="l3p-Pp-OBy"/>
                                             <constraint firstAttribute="bottom" secondItem="qBj-f7-688" secondAttribute="bottom" constant="10" id="pkM-nH-kG6"/>
                                             <constraint firstItem="qBj-f7-688" firstAttribute="leading" secondItem="IMX-oJ-oFR" secondAttribute="leading" constant="15" id="wts-JN-5wG"/>
+                                            <constraint firstItem="pB7-O0-H6L" firstAttribute="leading" secondItem="IMX-oJ-oFR" secondAttribute="leading" constant="10" id="yFZ-rd-cDt"/>
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="9e4-gD-bNh" userLabel="Row 1">
@@ -330,6 +338,7 @@
                         <outlet property="addButton" destination="gIb-ET-ceq" id="Vze-rg-1xh"/>
                         <outlet property="clearButton" destination="Nyw-zh-FLB" id="4tG-Gs-NLC"/>
                         <outlet property="divButton" destination="UyP-vP-NgG" id="FiG-mX-AGj"/>
+                        <outlet property="mfLabel" destination="pB7-O0-H6L" id="vDf-h4-Acd"/>
                         <outlet property="mulButton" destination="1Hc-Uw-LbS" id="Zs8-QB-zBG"/>
                         <outlet property="numLabel" destination="qBj-f7-688" id="4U9-26-anO"/>
                         <outlet property="subButton" destination="hpO-26-ScD" id="TUc-2E-ZD5"/>

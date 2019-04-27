@@ -21,6 +21,7 @@ class ViewController: UIViewController {
     
     //Global variable to update calculator number display
     @IBOutlet weak var numLabel: UILabel!
+    @IBOutlet weak var mfLabel: UILabel!
     
     //Global variables to update button display
     @IBOutlet weak var clearButton: UIButton!
@@ -40,6 +41,7 @@ class ViewController: UIViewController {
         mfInstance = MathFrame()
         
         numLabel.adjustsFontSizeToFitWidth = true
+        mfLabel.adjustsFontSizeToFitWidth = true
         
         updateDisplay()
         
@@ -174,7 +176,7 @@ class ViewController: UIViewController {
         clearButton.setTitle(correctClearTitle, for: .normal)
         
         //Math Frame Testing
-        //numLabel.text = mfInstance.description
+        mfLabel.text = mfInstance.description
     }
     
     func displayNumber() {

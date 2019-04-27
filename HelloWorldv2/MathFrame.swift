@@ -6,6 +6,18 @@
 //  Copyright © 2019 Bradley Christensen. All rights reserved.
 //
 
+/* WHATS NEXT?
+ * -----------
+ * View creates a new math frame every time the user presses
+ * equals, adding the first number as the result of said
+ * finished math frame. Allowing you to complete more math on
+ * the answer.
+ *
+ * Add AC/C functionality.
+ *
+ * 
+ */
+
 /* Class: Math Frame
  * -----------------
  */
@@ -54,11 +66,11 @@ class MathFrame {
     /* description
      * -----------
      * Prints all Numbers and Operators in the Math Frame in the form:
-     * "MathFrame: (-9.36) + (3.15) * (6.25) / (6.3232) + (100000.25)"
+     * Example: "(-9.36) + (3.15) * (6.25) / (6.3232) + (100000.25)"
      */
 
     var description: String {
-        var description:String = "\(type(of: self)):"
+        var description:String = ""
         
         var count:Int = 0
         for Number in self.numQueue {
