@@ -48,12 +48,15 @@ class MathFrame {
         currentOperator = Operator()
     }
     
+    
+/* Description */
+    
     /* description
      * -----------
      * Prints all Numbers and Operators in the Math Frame in the form:
      * "MathFrame: (-9.36) + (3.15) * (6.25) / (6.3232) + (100000.25)"
      */
-    
+
     var description: String {
         var description:String = "\(type(of: self)):"
         
@@ -79,8 +82,8 @@ class MathFrame {
 
         return description
     }
-    
-    
+
+
 /* Calculator Button Command Processors */
     
     /* sendDigit
@@ -88,18 +91,20 @@ class MathFrame {
      * Allows ViewController to send digits over so the Math Frame can process if
      * The user is typing a new number or adding to an old number
      */
-    
+
     func sendDigit(digit:Int) {
         if (!self.currentNumber.isEditable) {
             self.currentNumber = Number()
         }
         self.currentNumber.addDigit(digit: String(digit))
     }
-    
+
     /* sendOperator
      * ---------
      * Allows ViewController to send an operator into the Math Frame instance
      * Possible operators are tags 11-15, or "+", "-", "*", "/", and "=", respectively
+     *
+     * Right now, pressing "=" is the only way to resolve the tree.
      */
 
     func sendOperator(op:Operator) {
@@ -113,13 +118,17 @@ class MathFrame {
             operatorQueue.append(op)
         } else { //pressed equals button
             do {
+                //Remove extraneous operator
+                if (operatorQueue.count == numQueue.count) {
+                    operatorQueue.removeLast()
+                }
                 try self.currentNumber = resolveTree()
             } catch {
                 
             }
         }
     }
-    
+
     /* allClear and Clear
      * ------------------
      * Clear corresponds to the "C" button, whereas the All Clear function
@@ -132,7 +141,7 @@ class MathFrame {
      * All Clear clears the entire frame, as if the user has not yet typed anything,
      * allowing them to start from scratch.
      */
-    
+
     func allClear() {
         self.currentNumber = Number()
         self.numQueue.removeAll()
@@ -142,21 +151,21 @@ class MathFrame {
     func clear() {
         self.currentNumber = Number()
     }
-    
+
     /* changeSign
      * ----------
      * Changes the sign of the current number, or starts a new
      * Number that begins with "-0" where the "0" can still be
      * replaced with a digit.
      */
-    
+
     func changeSign() {
         if (!self.currentNumber.isEditable) {
             self.currentNumber = Number()
         }
         self.currentNumber.changeSign()
     }
-    
+
     /* addDecimal
      * ----------
      * Either creates a new number starting with "0.", or
@@ -164,7 +173,7 @@ class MathFrame {
      *
      * Handled in the Number Class.
      */
-    
+
     func addDecimal() {
         if (!self.currentNumber.isEditable) {
             self.currentNumber = Number()
@@ -231,17 +240,76 @@ class MathFrame {
      */
     
     func resolveTree() throws -> Number {
-        var result:Number = Number()
         do {
-            //Stub, only does first calculation
-            try result = resolve(lhs: self.numQueue[0], Op: self.operatorQueue[0], rhs: self.numQueue[1])
+            try resolveAllRecursively()
         } catch {
             //Stub error handling, always returns 0
             return Number()
         }
-        return result
+        return self.currentNumber
     }
     
+    /* Resolve All Recursively
+     * -----------------------
+     * HALF COMPLETE: ONLY SOLVES MULTIPLICATION
+     * Goes through the tree and solves all Multiplication/Division recursively.
+     */
+    
+    func resolveAllRecursively() throws {
+        //if (self.operatorQueue.count > 0) {
+            for n in 0..<self.operatorQueue.count {
+                //Step 1: figure out what our numbers/operator are
+                let op:Operator = self.operatorQueue[n]
+                let lhs:Number = self.numQueue[n]
+                let rhs:Number = self.numQueue[n+1]
+                var result:Number = Number()
+                //Higher priority goes first
+                if (op.opID == MUL_TAG || op.opID == DIV_TAG) {
+                    do {
+                    //Step two, resolve them
+                        result = try resolve(lhs: lhs, Op: op, rhs: rhs)
+                    //Step three, adjust the tree to show the operation has been completed
+                        //Insert the result in the spot where the first number was
+                        self.numQueue[n] = result
+                        //Remove the operator
+                        self.operatorQueue.remove(at: n)
+                        //remove the Number where rhs was
+                        numQueue.remove(at: n+1)
+                    //Step four, recur so that any other multiplication is done first
+                        if (operatorQueue.count > 0) {
+                            try resolveAllRecursively()
+                            return
+                        }
+                    } catch {
+                        self.allClear()
+                    }
+                }
+                //BUG: Addition just happens first anyway.
+                //Check if theres any more operators left
+                //If the operator to the right side has higher priority, dont do anything, else add?
+                if (op.opID == ADD_TAG || op.opID == SUB_TAG) {
+                    do {
+                        //Step two, resolve them
+                        result = try resolve(lhs: lhs, Op: op, rhs: rhs)
+                        //Step three, adjust the tree to show the operation has been completed
+                        //Insert the result in the spot where the first number was
+                        self.numQueue[n] = result
+                        //Remove the operator
+                        self.operatorQueue.remove(at: n)
+                        //remove the Number where rhs was
+                        numQueue.remove(at: n+1)
+                        //Step four, recur so that any other multiplication is done first
+                        if (operatorQueue.count > 0) {
+                            try resolveAllRecursively()
+                            return
+                        }
+                    } catch {
+                        self.allClear()
+                    }
+                }
+            }
+        //}
+    }
     
     /* Resolve
      * -------
@@ -288,6 +356,7 @@ class MathFrame {
         let resultString:String = String(resultDouble) //May return as scientific notation
         return Number(num:resultString)
     }
+    
     
 /* Error Handling */
     

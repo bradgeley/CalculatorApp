@@ -34,6 +34,15 @@ class Operator {
         self.active = false
     }
     
+/* Description */
+    
+    /* description
+     * -----------
+     */
+    
+    var description: String {
+        return "\(type(of: self)): " + String(self.opID)
+    }
     
 /* Getters and Setters */
     

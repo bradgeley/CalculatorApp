@@ -45,7 +45,7 @@ class ViewController: UIViewController {
         
     }
     
-/* IBAction Functions  */
+/* IBAction Functions */
     
     /* AllClear
      * --------
@@ -130,7 +130,11 @@ class ViewController: UIViewController {
         updateDisplay()
     }
 
-    //Addition, Subtraction, Division, Multiplication, and Equals buttons
+    /* operatorPressed
+     * ---------------
+     * Addition, Subtraction, Division, Multiplication, and Equals buttons
+     */
+    
     @IBAction func operatorPressed(_ sender: Any) {
         
         //Save the tag of the operator pressed
@@ -145,9 +149,16 @@ class ViewController: UIViewController {
         updateDisplay()
     }
     
-/* Internal Display Functions */
     
-    //Asks the Math Frame for displayable data, then displays the data.
+/* Display Functions */
+    
+    /* updateDisplay
+     * -------------
+     * Asks the Math Frame which number to display on screen.
+     * Then highlights the appropriate operator and updates the
+     * clear button display.
+     */
+    
     func updateDisplay() {
         //Update display for number first
         displayNumber()
@@ -173,7 +184,12 @@ class ViewController: UIViewController {
 
     }
     
-    //First resets all highlights to default, then highlights correct operator
+    /* highlihtOperator
+     * ----------------
+     * Resets the color of all operator buttons on screen,
+     * then asks the Math Frame which one, if any, to display.
+     */
+    
     func highlightOperator(op:Operator) {
         addButton.backgroundColor = DEFAULT_ORANGE
         subButton.backgroundColor = DEFAULT_ORANGE

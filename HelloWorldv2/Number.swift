@@ -48,6 +48,16 @@ class Number {
 
     }
     
+/* Description */
+    
+    /* description
+     * -----------
+     */
+    
+    var description: String {
+        return "\(type(of: self)): " + self.string
+    }
+    
     //Used to initialize the answer of arithmetic into a new Number. \
     //Not editable, due to String(Double) functionality
     init (num:Double) {
