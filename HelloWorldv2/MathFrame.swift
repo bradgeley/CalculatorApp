@@ -194,20 +194,6 @@ class MathFrame {
         }
     }
     
-    /* Get/Set Current Number
-     * ----------------------
-     * Current Number describes the number that the user is currently typing,
-     * or the last number that the user completed typing.
-     */
-    
-    func setCurrentNumber(num:Number) {
-        self.currentNumber = num
-    }
-    
-    func getCurrentNumber() -> Number {
-        return self.currentNumber
-    }
-    
     /* Get/Set Current Operator
      * ------------------------
      * The current Operator describes the last operator that the user
@@ -242,6 +228,9 @@ class MathFrame {
     func resolveTree() throws -> Number {
         do {
             try resolveAllRecursively()
+            if (numQueue.count != 0) {
+                self.currentNumber = numQueue[0]
+            }
         } catch {
             //Stub error handling, always returns 0
             return Number()
@@ -283,7 +272,6 @@ class MathFrame {
                     self.allClear()
                 }
             }
-            //Check if theres any more operators left
             //If the Operator Queue has any more multiplication or division, skip
             if (!containsMultOperators(arr: self.operatorQueue) && (op.opID == ADD_TAG || op.opID == SUB_TAG)) {
                 do {

@@ -39,6 +39,8 @@ class ViewController: UIViewController {
         
         mfInstance = MathFrame()
         
+        numLabel.adjustsFontSizeToFitWidth = true
+        
         updateDisplay()
         
         //Do any additional setup after loading the view.
@@ -172,12 +174,11 @@ class ViewController: UIViewController {
         clearButton.setTitle(correctClearTitle, for: .normal)
         
         //Math Frame Testing
-        numLabel.adjustsFontSizeToFitWidth = true
-        numLabel.text = mfInstance.description
+        //numLabel.text = mfInstance.description
     }
     
     func displayNumber() {
-        let currentNumber:Number = mfInstance.getCurrentNumber()
+        let currentNumber:Number = mfInstance.currentNumber
         
         //Set label text to current Number, according to Math Frame
         numLabel.text = addCommas(num: currentNumber.string)
