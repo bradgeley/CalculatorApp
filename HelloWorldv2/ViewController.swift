@@ -12,26 +12,26 @@ import Foundation
 
 class ViewController: UIViewController {
     
-    //global constants
+/* Constants */
     let ADD_TAG = 11, SUB_TAG = 12, MUL_TAG = 13, DIV_TAG = 14, EQUALS_TAG = 15
     
     //operator button colors
     let DEFAULT_ORANGE:UIColor = UIColor(cgColor: #colorLiteral(red: 1, green: 0.6636318564, blue: 0, alpha: 1))
     let HIGHLIGHTED_ORANGE:UIColor = UIColor(cgColor: #colorLiteral(red: 0.798058331, green: 0.5282882452, blue: 0.02409346029, alpha: 1))
     
-    //Global variable to update calculator number display
-    @IBOutlet weak var numLabel: UILabel!
-    @IBOutlet weak var mfLabel: UILabel!
+/* Global Variables */
+
+    @IBOutlet weak var numLabel: UILabel! //Current Number display
+    @IBOutlet weak var mfLabel: UILabel! //Whole equation display
     
-    //Global variables to update button display
+    //Global variables to update button highlights/text
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var divButton: UIButton!
     @IBOutlet weak var mulButton: UIButton!
     @IBOutlet weak var subButton: UIButton!
     @IBOutlet weak var addButton: UIButton!
     
-    
-    //Global variable to initialize our Math Frame instance
+    //Math Frame handles all the numbers and data organization
     var mfInstance:MathFrame!
     
     override func viewDidLoad() {
@@ -44,8 +44,6 @@ class ViewController: UIViewController {
         mfLabel.adjustsFontSizeToFitWidth = true
         
         updateDisplay()
-        
-        //Do any additional setup after loading the view.
         
     }
     
@@ -165,7 +163,8 @@ class ViewController: UIViewController {
     
     func updateDisplay() {
         //Update display for number first
-        displayNumber()
+        let currentNumber:Number = mfInstance.currentNumber
+        numLabel.text = addCommas(num: currentNumber.string)
         
         //Find and highlight operator, if any
         let currentOperator:Operator = mfInstance.getCurrentOperator()
@@ -177,14 +176,6 @@ class ViewController: UIViewController {
         
         //Math Frame Testing
         mfLabel.text = mfInstance.description
-    }
-    
-    func displayNumber() {
-        let currentNumber:Number = mfInstance.currentNumber
-        
-        //Set label text to current Number, according to Math Frame
-        numLabel.text = addCommas(num: currentNumber.string)
-
     }
     
     /* highlihtOperator

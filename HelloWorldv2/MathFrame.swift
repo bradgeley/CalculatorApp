@@ -14,8 +14,6 @@
  * the answer.
  *
  * Add AC/C functionality.
- *
- * 
  */
 
 /* Class: Math Frame
@@ -33,11 +31,6 @@ class MathFrame {
     var numQueue:Array<Number>
     var operatorQueue:Array<Operator>
     
-    //Index in the numQueue where the current displayed number is being stored
-    var currentNumberIndex:Int
-    //Index in the operatorQueue where the latest operator pressed is held
-    var currentOperatorIndex:Int
-    
     //stub
     var currentNumber:Number
     var currentOperator:Operator
@@ -51,9 +44,6 @@ class MathFrame {
     init() {
         numQueue = Array()
         operatorQueue = Array()
-        
-        currentNumberIndex = 0
-        currentOperatorIndex = 0
         
         //stub
         currentNumber = Number()
@@ -120,10 +110,20 @@ class MathFrame {
      */
 
     func sendOperator(op:Operator) {
-        //stub
+        //Case where user hit 2 operators in a row
+        //TO ADD: operator then equals does something?
         self.currentOperator = op
+        
+        //Typing of the current number is over, add to Tree.
         self.currentNumber.isEditable = false
-        numQueue.append(self.currentNumber)
+        
+        if (operatorQueue.count == numQueue.count) {
+            numQueue.append(self.currentNumber)
+        }
+    
+        if (operatorQueue.count == 0 && currentNumber.string != numQueue[0].string) {
+            numQueue[0] = currentNumber
+        }
         
         //If the operator was not the equals button
         if (op.opID != EQUALS_TAG) {
@@ -136,7 +136,7 @@ class MathFrame {
                 }
                 try self.currentNumber = resolveTree()
             } catch {
-                
+                self.allClear()
             }
         }
     }
@@ -254,59 +254,60 @@ class MathFrame {
      * -----------------------
      * HALF COMPLETE: ONLY SOLVES MULTIPLICATION
      * Goes through the tree and solves all Multiplication/Division recursively.
+     * there is a way to write without repeating code, find it.
      */
     
     func resolveAllRecursively() throws {
+        //Recursion ends when operatorQueue is empty
         for n in 0..<self.operatorQueue.count {
-            //Step 1: figure out what our numbers/operator are
             let op:Operator = self.operatorQueue[n]
             let lhs:Number = self.numQueue[n]
             let rhs:Number = self.numQueue[n+1]
-            var result:Number = Number()
-            //Higher priority goes first
+            
+            //Multiplatication and Division first
             if (op.opID == MUL_TAG || op.opID == DIV_TAG) {
-                do {
-                //Step two, resolve them
-                    result = try resolve(lhs: lhs, Op: op, rhs: rhs)
-                //Step three, adjust the tree to show the operation has been completed
-                    //Insert the result in the spot where the first number was
-                    self.numQueue[n] = result
-                    //Remove the operator
-                    self.operatorQueue.remove(at: n)
-                    //remove the Number where rhs was
-                    numQueue.remove(at: n+1)
-                //Step four, recur so that any other multiplication is done first
-                    if (operatorQueue.count > 0) {
-                        try resolveAllRecursively()
-                        return
-                    }
-                } catch {
-                    self.allClear()
-                }
+                updateTree(lhs: lhs, op: op, rhs: rhs, index: n) //recursive
+                return
             }
-            //If the Operator Queue has any more multiplication or division, skip
+            
+            //Addition and Subtraction second
             if (!containsMultOperators(arr: self.operatorQueue) && (op.opID == ADD_TAG || op.opID == SUB_TAG)) {
-                do {
-                    //Step two, resolve them
-                    result = try resolve(lhs: lhs, Op: op, rhs: rhs)
-                    //Step three, adjust the tree to show the operation has been completed
-                    //Insert the result in the spot where the first number was
-                    self.numQueue[n] = result
-                    //Remove the operator
-                    self.operatorQueue.remove(at: n)
-                    //remove the Number where rhs was
-                    numQueue.remove(at: n+1)
-                    //Step four, recur so that any other multiplication is done first
-                    if (operatorQueue.count > 0) {
-                        try resolveAllRecursively()
-                        return
-                    }
-                } catch {
-                    self.allClear()
-                }
+                updateTree(lhs: lhs, op: op, rhs: rhs, index: n) //recursive
+                return
             }
         }
     }
+    
+    func updateTree(lhs:Number, op:Operator, rhs:Number, index:Int) {
+        var result:Number = Number()
+        //Higher priority goes first
+        do {
+            //Step two, resolve them
+            result = try resolve(lhs: lhs, Op: op, rhs: rhs)
+            //Step three, adjust the tree to show the operation has been completed
+            //Insert the result in the spot where the first number was
+            self.numQueue[index] = result
+            //Remove the operator
+            self.operatorQueue.remove(at: index)
+            //remove the Number where rhs was
+            numQueue.remove(at: index+1)
+            //Step four, recur so that any other multiplication is done first
+            if (operatorQueue.count > 0) {
+                try resolveAllRecursively()
+                return
+            }
+        } catch {
+            self.allClear()
+        }
+    }
+    
+    
+    
+    /* containsMultOperators
+     * ---------------------
+     * Checks if there are still multiplication or division
+     * operators left in the Operator Array.
+     */
     
     func containsMultOperators(arr: Array<Operator>) -> Bool {
         for op in arr {
