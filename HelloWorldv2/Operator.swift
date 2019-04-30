@@ -10,7 +10,9 @@ import Foundation
 
 class Operator {
     
-    //global constants
+    
+/* Constants */
+    
     let ADD_TAG = 11, SUB_TAG = 12, MUL_TAG = 13, DIV_TAG = 14, EQUALS_TAG = 15
     
     //Unique identifier for operator
@@ -34,6 +36,7 @@ class Operator {
         self.active = false
     }
     
+    
 /* Description */
     
     /* description
@@ -43,6 +46,7 @@ class Operator {
     var description: String {
         return "\(type(of: self)): " + String(self.opID)
     }
+    
     
 /* Getters and Setters */
     

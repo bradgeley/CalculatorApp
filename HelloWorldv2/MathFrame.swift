@@ -8,30 +8,24 @@
 
 /* WHATS NEXT?
  * -----------
- * View creates a new math frame every time the user presses
- * equals, adding the first number as the result of said
- * finished math frame. Allowing you to complete more math on
- * the answer.
- *
  * Add AC/C functionality.
- */
-
-/* Class: Math Frame
- * -----------------
  */
 
 import Foundation
 
+
 class MathFrame {
     
-    //global constants
+    
+/* Constants */
+    
     let ADD_TAG = 11, SUB_TAG = 12, MUL_TAG = 13, DIV_TAG = 14, EQUALS_TAG = 15
     
     //Arrays for keeping track of multiple Numbers and Operators at once
     var numQueue:Array<Number>
     var operatorQueue:Array<Operator>
     
-    //stub
+    //Last number/operator to be entered, or the current number being added to
     var currentNumber:Number
     var currentOperator:Operator
     
@@ -45,7 +39,6 @@ class MathFrame {
         numQueue = Array()
         operatorQueue = Array()
         
-        //stub
         currentNumber = Number()
         currentOperator = Operator()
     }
@@ -81,6 +74,8 @@ class MathFrame {
             }
             count += 1
         }
+        description += " (" + currentNumber.string + ")"
+        
 
         return description
     }
@@ -88,19 +83,58 @@ class MathFrame {
 
 /* Calculator Button Command Processors */
     
-    /* sendDigit
-     * ---------
-     * Allows ViewController to send digits over so the Math Frame can process if
-     * The user is typing a new number or adding to an old number
+    /* allClear and Clear
+     * ------------------
+     * Currently not completely functional yet.
+     *
+     * Clear corresponds to the "C" button, whereas the All Clear function
+     * corresponds to the "AC" button.
+     *
+     * Clear simply refreshes the current number being typed by the user,
+     * allowing them to enter a completely different number, but keeping their
+     * previous entries in tact.
+     *
+     * All Clear clears the entire frame, as if the user has not yet typed anything,
+     * allowing them to start from scratch.
+     */
+    
+    func allClear() {
+        self.currentNumber = Number()
+        self.numQueue.removeAll()
+        self.operatorQueue.removeAll()
+    }
+    
+    func clear() {
+        self.currentNumber = Number()
+    }
+    
+    /* percent
+     * -------
+     * Divides the current number by 100, and makes it uneditable.
+     */
+    
+    func percent() {
+        do {
+            try self.currentNumber = resolve(lhs: currentNumber, Op: Operator(opID: 14), rhs: Number(num: "100"))
+        } catch {
+            
+        }
+    }
+
+    /* changeSign
+     * ----------
+     * Changes the sign of the current number, or starts a new
+     * Number that begins with "-0" where the "0" can still be
+     * replaced with a digit.
      */
 
-    func sendDigit(digit:Int) {
+    func changeSign() {
         if (!self.currentNumber.isEditable) {
             self.currentNumber = Number()
         }
-        self.currentNumber.addDigit(digit: String(digit))
+        self.currentNumber.changeSign()
     }
-
+    
     /* sendOperator
      * ---------
      * Allows ViewController to send an operator into the Math Frame instance
@@ -108,7 +142,7 @@ class MathFrame {
      *
      * Right now, pressing "=" is the only way to resolve the tree.
      */
-
+    
     func sendOperator(op:Operator) {
         //Case where user hit 2 operators in a row
         //TO ADD: operator then equals does something?
@@ -120,7 +154,7 @@ class MathFrame {
         if (operatorQueue.count == numQueue.count) {
             numQueue.append(self.currentNumber)
         }
-    
+        
         if (operatorQueue.count == 0 && currentNumber.string != numQueue[0].string) {
             numQueue[0] = currentNumber
         }
@@ -140,42 +174,18 @@ class MathFrame {
             }
         }
     }
-
-    /* allClear and Clear
-     * ------------------
-     * Clear corresponds to the "C" button, whereas the All Clear function
-     * corresponds to the "AC" button.
-     *
-     * Clear simply refreshes the current number being typed by the user,
-     * allowing them to enter a completely different number, but keeping their
-     * previous entries in tact.
-     *
-     * All Clear clears the entire frame, as if the user has not yet typed anything,
-     * allowing them to start from scratch.
-     */
-
-    func allClear() {
-        self.currentNumber = Number()
-        self.numQueue.removeAll()
-        self.operatorQueue.removeAll()
-    }
     
-    func clear() {
-        self.currentNumber = Number()
-    }
-
-    /* changeSign
-     * ----------
-     * Changes the sign of the current number, or starts a new
-     * Number that begins with "-0" where the "0" can still be
-     * replaced with a digit.
+    /* sendDigit
+     * ---------
+     * Allows ViewController to send digits over so the Math Frame can process if
+     * The user is typing a new number or adding to an old number
      */
-
-    func changeSign() {
+    
+    func sendDigit(digit:Int) {
         if (!self.currentNumber.isEditable) {
             self.currentNumber = Number()
         }
-        self.currentNumber.changeSign()
+        self.currentNumber.addDigit(digit: String(digit))
     }
 
     /* addDecimal
@@ -193,46 +203,13 @@ class MathFrame {
         self.currentNumber.addDecimal()
     }
     
-    /* percent
-     * -------
-     * Divides the current number by 100, and makes it uneditable.
-     */
-    
-    func percent() {
-        do {
-            try self.currentNumber = resolve(lhs: currentNumber, Op: Operator(opID: 14), rhs: Number(num: "100"))
-        } catch {
-            //Never produces an error
-        }
-    }
-    
-    /* Get/Set Current Operator
-     * ------------------------
-     * The current Operator describes the last operator that the user
-     * typed, and may be changed by overriding with another operator button
-     * press (including by just pressing equals)
-     */
-    
-    func setCurrentOperator(op: Operator) {
-        self.currentOperator = op
-    }
-    
-    func getCurrentOperator() -> Operator {
-        return self.currentOperator
-    }
-    
     
 /* Arithmetic Functions */
     
-    /* Resolve Tree
+    /* resolveTree
      * ------------
-     * The big boy function. The one ive dreaded to write.
-     * How to resolve the tree of Numbers and Operators into
-     * an answer once the user has clicked "="
-     *
-     * Uses a ?recursive loop? or normal loop to solve the tree
-     * ?one operator at a time?
-     * using multiplication and division first.
+     * Uses a recursive loop o solve the tree one operator at a time,
+     * doing all multiplication and division first.
      *
      * The return Number is the result of the resolved equations
      */
@@ -250,11 +227,10 @@ class MathFrame {
         return self.currentNumber
     }
     
-    /* Resolve All Recursively
+    /* resolveAllRecursively
      * -----------------------
-     * HALF COMPLETE: ONLY SOLVES MULTIPLICATION
-     * Goes through the tree and solves all Multiplication/Division recursively.
-     * there is a way to write without repeating code, find it.
+     * Goes through the numQueue and operatorQueue and solves all
+     * Multiplication/Division, then all addition/subtraction.
      */
     
     func resolveAllRecursively() throws {
@@ -278,20 +254,24 @@ class MathFrame {
         }
     }
     
+    /* updateTree
+     * ----------
+     * Goes through the numQueue and operatorQueue and solves all
+     * Multiplication/Division, then all addition/subtraction.
+     */
+    
     func updateTree(lhs:Number, op:Operator, rhs:Number, index:Int) {
         var result:Number = Number()
-        //Higher priority goes first
         do {
-            //Step two, resolve them
+            //Resolve the equation
             result = try resolve(lhs: lhs, Op: op, rhs: rhs)
-            //Step three, adjust the tree to show the operation has been completed
             //Insert the result in the spot where the first number was
             self.numQueue[index] = result
             //Remove the operator
             self.operatorQueue.remove(at: index)
             //remove the Number where rhs was
             numQueue.remove(at: index+1)
-            //Step four, recur so that any other multiplication is done first
+            //recur
             if (operatorQueue.count > 0) {
                 try resolveAllRecursively()
                 return
@@ -301,12 +281,10 @@ class MathFrame {
         }
     }
     
-    
-    
     /* containsMultOperators
      * ---------------------
      * Checks if there are still multiplication or division
-     * operators left in the Operator Array.
+     * operators left in the operatorQueue.
      */
     
     func containsMultOperators(arr: Array<Operator>) -> Bool {
@@ -318,7 +296,7 @@ class MathFrame {
         return false
     }
     
-    /* Resolve
+    /* resolve
      * -------
      * Solves the math between two numbers and the operator between.
      * Order is important, having the user's first entered number
@@ -369,8 +347,11 @@ class MathFrame {
     
     /* Throw Error
      * -----------
-     * Only error currently allowed is DIV/0
-     * Displays the error in the text bar when one is thrown.
+     * Not sure how best to implement this.
+     *
+     * Only error currently checked for is DIV/0
+     *
+     * Current stub is to allClear the tree if div/0 happens.
      */
     
     enum mathError: Error {

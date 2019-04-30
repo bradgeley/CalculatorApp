@@ -27,8 +27,8 @@ class Number {
     
 /* Constants */
 
-    //Maximum digits allowed for Number
-    let MAX_DIGITS = 12
+    //Max digits for a Number, not implemented right now
+    let MAX_DIGITS = 20
     
     
 /* Global Variables */
@@ -47,6 +47,7 @@ class Number {
         self.isEditable = true
 
     }
+    
     
 /* Description */
     
@@ -76,7 +77,6 @@ class Number {
         self.string = String(num)
         self.isEditable = false
     }
-    
     
 
 /* Conversion functions */

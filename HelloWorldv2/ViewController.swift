@@ -12,12 +12,15 @@ import Foundation
 
 class ViewController: UIViewController {
     
+    
 /* Constants */
+    
     let ADD_TAG = 11, SUB_TAG = 12, MUL_TAG = 13, DIV_TAG = 14, EQUALS_TAG = 15
     
     //operator button colors
     let DEFAULT_ORANGE:UIColor = UIColor(cgColor: #colorLiteral(red: 1, green: 0.6636318564, blue: 0, alpha: 1))
     let HIGHLIGHTED_ORANGE:UIColor = UIColor(cgColor: #colorLiteral(red: 0.798058331, green: 0.5282882452, blue: 0.02409346029, alpha: 1))
+    
     
 /* Global Variables */
 
@@ -30,6 +33,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var mulButton: UIButton!
     @IBOutlet weak var subButton: UIButton!
     @IBOutlet weak var addButton: UIButton!
+    
+    
+/* View Initializer */
     
     //Math Frame handles all the numbers and data organization
     var mfInstance:MathFrame!
@@ -47,11 +53,12 @@ class ViewController: UIViewController {
         
     }
     
+    
 /* IBAction Functions */
     
     /* AllClear
      * --------
-     * "AC" button. Resets the calculator.
+     * "AC" or "C" button. Resets the calculator.
      * The numberPressed function changes the "All Clear" button to
      * "Clear" or the "C" button when numbers have been typed.
      * Clear only clears the current number being typed, not all data, once
@@ -59,8 +66,6 @@ class ViewController: UIViewController {
      */
 
     @IBAction func AllClear(_ sender: Any) {
-        
-        //Send command to Math Frame for processing
         if (mfInstance.clearButtonShowsAC) {
             mfInstance.allClear()
         }
@@ -72,74 +77,34 @@ class ViewController: UIViewController {
         updateDisplay()
     }
     
-    /* ChangeSign
-     * ----------
-     * "+/-" button. Multiplies current number by -1.
-     */
-    
-    @IBAction func ChangeSign(_ sender: Any) {
-        
-        //Send command to Math Frame for processing
-        mfInstance.changeSign()
-        
-        updateDisplay()
-    }
-    
-    /* Decimal
-     * -------
-     * "." button. Adds a maximum of one decimal to the displayed number.
-     */
-    
-    @IBAction func Decimal(_ sender: Any) {
-        
-        //Send command to Math Frame for processing
-        mfInstance.addDecimal()
-        
-        updateDisplay()
-    }
-    
     /* Percent
      * --------
      * "%" button. Divides the current number by 100.
      */
     
     @IBAction func Percent(_ sender: Any) {
-        
-        //Send command to Math Frame for processing
         mfInstance.percent()
         
         updateDisplay()
     }
     
-
-    /* numberPressed
-     * -------------
-     * Buttons "0" through "9"
-     * Changes the "All Clear" button to "Clear" when numbers have been typed.
-     * Clear only clears the current number being typed, not all data, once
-     * it has been changed.
+    /* ChangeSign
+     * ----------
+     * "+/-" button. Multiplies current number by -1.
      */
     
-    @IBAction func numberPressed(_ sender: Any) {
-        
-        //Find out which number was pressed
-        let tag = (sender as! UIButton).tag
-        let num = (tag - 1)
-        
-        //Send digit to Math Frame for processing
-        mfInstance.sendDigit(digit: num)
+    @IBAction func ChangeSign(_ sender: Any) {
+        mfInstance.changeSign()
         
         updateDisplay()
     }
-
+    
     /* operatorPressed
      * ---------------
      * Addition, Subtraction, Division, Multiplication, and Equals buttons
      */
     
     @IBAction func operatorPressed(_ sender: Any) {
-        
-        //Save the tag of the operator pressed
         let tag:Int = (sender as! UIButton).tag
         
         //Create new operator instance with that tag
@@ -150,7 +115,35 @@ class ViewController: UIViewController {
         
         updateDisplay()
     }
+
+    /* numberPressed
+     * -------------
+     * Buttons "0" through "9"
+     * Changes the "All Clear" button to "Clear" when numbers have been typed.
+     * Clear only clears the current number being typed, not all data, once
+     * it has been changed.
+     */
     
+    @IBAction func numberPressed(_ sender: Any) {
+        let tag = (sender as! UIButton).tag
+        let num = (tag - 1) //All tags are 1 higher than their value
+        
+        mfInstance.sendDigit(digit: num)
+        
+        updateDisplay()
+    }
+    
+    /* Decimal
+     * -------
+     * "." button. Adds a maximum of one decimal to the displayed number.
+     */
+    
+    @IBAction func Decimal(_ sender: Any) {
+        mfInstance.addDecimal()
+        
+        updateDisplay()
+    }
+
     
 /* Display Functions */
     
@@ -162,12 +155,12 @@ class ViewController: UIViewController {
      */
     
     func updateDisplay() {
-        //Update display for number first
+        //Update display for number
         let currentNumber:Number = mfInstance.currentNumber
         numLabel.text = addCommas(num: currentNumber.string)
         
         //Find and highlight operator, if any
-        let currentOperator:Operator = mfInstance.getCurrentOperator()
+        let currentOperator:Operator = mfInstance.currentOperator
         highlightOperator(op: currentOperator)
         
         //Set clear button to show correct text, according to Math Frame
@@ -190,6 +183,7 @@ class ViewController: UIViewController {
         mulButton.backgroundColor = DEFAULT_ORANGE
         divButton.backgroundColor = DEFAULT_ORANGE
 
+        //Theres probably a way to shorten the code here
         
         //Highlight addition
         if (op.opID == ADD_TAG) {
@@ -218,10 +212,12 @@ class ViewController: UIViewController {
     
     /* Add Commas
      * ----------
+     * Long function, I should shorten this.
      * Takes any permutation of a number that is possible for the Calculator to display,
      * and adds commas.
      *
-     * Add commas should only be used when DISPLAYING a number on the calculator.
+     * Add commas should only be used when DISPLAYING a number on the calculator,
+     * Not when saving a string as the value for a Number.
      */
     
     func addCommas(num:String) -> String {
@@ -238,9 +234,7 @@ class ViewController: UIViewController {
         var sign:String = ""
         var numWithNoSign = numWithNoCommas
         if (num.contains("-")) {
-            //Save the sign
             sign = "-"
-            //Drop the sign
             numWithNoSign = String(numWithNoSign.dropFirst())
         }
         
@@ -249,21 +243,23 @@ class ViewController: UIViewController {
         
         //Initializers to save each side of the split (if a split occured)
         let numWithNoDecimal:String = String(numSplitByDecimal[0])
-        var decimal:String = (num.contains(".") ? "." : "")
+        var decimal:String = (num.contains(".") ? "." : "") //save to add back later
         
-        //If a split did occur, save the decimal and add back the delimeter
+        //If a split did occur, save the decimal digits
         if (numSplitByDecimal.count > 1) {
             decimal += String(numSplitByDecimal[1])
         }
         
-        //Initializers to add commas to everything on the left of decimal
+        //Reverse the num for iteration, initialize the result
         let numBackwards:String = String(numWithNoDecimal.reversed())
         var numWithCommas:String = ""
         
-        //as we iterate through numBackwards, numRemaining will show only the numbers we have not yet counted
+        //As we iterate through numBackwards, numRemaining will
+        //show only the numbers we have not yet counted
         var numRemaining = numBackwards
         
-        //Iterate through numBackwards, adding each character and comma to the blank String numWithCommas
+        //Iterate through numBackwards, adding each character and comma
+        //to the blank String numWithCommas
         var count = 0
         for char in numBackwards {
             numWithCommas += String(char)
@@ -278,22 +274,19 @@ class ViewController: UIViewController {
                 count = 0
             }
         }
+        
         //Reverse the String back to normal, and add back the decimal/sign
         return String(sign + String((numWithCommas.reversed() + decimal)))
     }
     
     /* Remove Commas
      * -------------
-     * Simply uses the removeAll(where:) function to find commas.
+     * Simply uses the removeAll(where:) function for commas.
      */
     
     func removeCommas(num:String) -> String {
-        let removedCharacter:Character = ","
         var result = num
-        
-        //Use apple code to remove all commas
-        result.removeAll(where: { removedCharacter == $0 } )
-        
+        result.removeAll(where: { "," == $0 } )
         return result
     }
     
